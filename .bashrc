@@ -137,7 +137,7 @@ POWERLINE_BASH_SELECT=1
 export PATH=$HOME/.local/bin:$PATH
 
 #fzf settings 
-#make fzf to use fdfind by default instead of find
+#make fzf(fuzzy finder/filter) to use fdfind by default instead of find
 #it follows symbolic links and includes hidden files (but exclude .git folders)
 export FZF_DEFAULT_COMMAND='fd --type file --strip-cwd-prefix --follow --hidden --exclude .git' 
 #use fd's colored output inside fzf, also add --color=always in the above command
