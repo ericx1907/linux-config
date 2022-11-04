@@ -140,5 +140,11 @@ export PATH=$HOME/.local/bin:$PATH
 #make fzf(fuzzy finder/filter) to use fdfind by default instead of find
 #it follows symbolic links and includes hidden files (but exclude .git folders)
 export FZF_DEFAULT_COMMAND='fd --type file --strip-cwd-prefix --follow --hidden --exclude .git' 
-#use fd's colored output inside fzf, also add --color=always in the above command
-#export FZF_DEFAULT_OPTS="--ansi"
+#if using fd's colored output inside fzf, add --ansi in the option and --color=always in the above command
+export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --border"
+
+#enable fzf bash autocompletion 
+source /usr/share/bash-completion/completions/fzf 
+
+#enable fzf bash key-bindings
+source /usr/share/doc/fzf/examples/key-bindings.bash
