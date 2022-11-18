@@ -89,7 +89,7 @@ fi
 
 # some more ls aliases
 alias ll='ls -alF'
-alias la='ls -A'
+alias la='ls -AF'
 alias l='ls -CF'
 
 # Add an "alert" alias for long running commands.  Use like so:
@@ -136,15 +136,50 @@ POWERLINE_BASH_SELECT=1
 #add fd(fdfind) to the executable path
 export PATH=$HOME/.local/bin:$PATH
 
+#change bat theme to zenburn
+export BAT_THEME="zenburn"
+
 #fzf settings 
 #make fzf(fuzzy finder/filter) to use fdfind by default instead of find
 #it follows symbolic links and includes hidden files (but exclude .git folders)
 export FZF_DEFAULT_COMMAND='fd --type file --strip-cwd-prefix --follow --hidden --exclude .git' 
 #if using fd's colored output inside fzf, add --ansi in the option and --color=always in the above command
-export FZF_DEFAULT_OPTS="--height=40% --layout=reverse --info=inline --border"
+export FZF_DEFAULT_OPTS="--ansi --height=90% --layout=reverse --info=inline --border"
 
 #enable fzf bash autocompletion 
 source /usr/share/bash-completion/completions/fzf 
 
 #enable fzf bash key-bindings
 source /usr/share/doc/fzf/examples/key-bindings.bash
+
+#single quote tab completion behavior
+#use ' as the trigger sequence instead of the default **
+export FZF_COMPLETION_TRIGGER="''"
+
+#use fd instead the default find for path completion
+_fzf_compgen_path() {
+  fd --hidden --follow --exclude ".git" . "$1"
+}
+
+#use fd to generate the list for directory completion
+_fzf_compgen_dir() {
+  fd --type d --hidden --follow --exclude ".git" . "$1"
+}
+
+#add fzf completion in bash for other commands
+_fzf_setup_completion path bat
+_fzf_setup_completion dir tree
+
+#fzf ctrl-t and alt-c behavior
+export FZF_CTRL_T_COMMAND="fd --strip-cwd-prefix --hidden --follow --exclude .git"
+export FZF_ALT_C_COMMAND="fd -t d --strip-cwd-prefix --hidden --follow --exclude .git"
+export FZF_ALT_C_OPTS="--height=60% --preview 'tree -C {} | head -200'"
+
+#Enable Xilinx tools
+source /tools/Xilinx/Vivado/2022.1/settings64.sh
+#source /tools/Xilinx/Vitis/2022.1/settings64.sh
+
+#Load nvm (node version manager) in each shell session
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
