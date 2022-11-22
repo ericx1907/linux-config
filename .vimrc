@@ -47,27 +47,33 @@ let g:ycm_always_populate_location_list = 1
 nmap <leader>ysw <Plug>(YCMFindSymbolInWorkspace)
 nmap <leader>ysd <Plug>(YCMFindSymbolInDocument)
 " Additional LSP server for other languages
-let g:ycm_language_server = [
-  \   { 'name': 'vim',
-  \     'filetypes': [ 'vim' ],
-  \     'cmdline':[ '/home/eric/.nvm/versions/node/v18.12.1/bin/vim-language-server' , '--stdio' ]
-  \   },
-  \ ]
-let g:ycm_error_symbol = '!!'
+"let g:ycm_language_server = [
+"  \   { 'name': 'vim',
+"  \     'filetypes': [ 'vim' ],
+"  \     'cmdline':[ '/home/eric/.nvm/versions/node/v18.12.1/bin/vim-language-server' , '--stdio' ]
+"  \   },
+"  \ ]
+"let g:ycm_error_symbol = '!!'
 
 " Add syntax check  
 Plugin 'dense-analysis/ale'
-" In ~/.vim/vimrc, or somewhere similar.
+" Specify language server for specific filetype 
 let g:ale_linters = {
   \ 'javascript': ['eslint'],
-  \ 'vim'       : [],
+  \ 'vim'       : ['vimls'],
+  \ 'vhdl'      : ['xvhdl'],
   \}
+" language server options:
+let g:ale_vhdl_xvhdl_options = '--nolog'
+
+" Open vim loclist whenever there is error or warning
+let g:ale_open_list = 1
 
 " Add PEP 8 checking for python
 Plugin 'nvie/vim-flake8'
 
 " trying out some color scheme
-Plugin 'jnurmine/Zenburn'
+Plugin 'jnurmine/Zenburn' 
 
 " file system explorer in VIM
 Plugin 'preservim/nerdtree'
