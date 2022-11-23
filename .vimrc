@@ -47,33 +47,27 @@ let g:ycm_always_populate_location_list = 1
 nmap <leader>ysw <Plug>(YCMFindSymbolInWorkspace)
 nmap <leader>ysd <Plug>(YCMFindSymbolInDocument)
 " Additional LSP server for other languages
-"let g:ycm_language_server = [
-"  \   { 'name': 'vim',
-"  \     'filetypes': [ 'vim' ],
-"  \     'cmdline':[ '/home/eric/.nvm/versions/node/v18.12.1/bin/vim-language-server' , '--stdio' ]
-"  \   },
-"  \ ]
-"let g:ycm_error_symbol = '!!'
+let g:ycm_language_server = [
+  \   { 'name': 'vim',
+  \     'filetypes': [ 'vim' ],
+  \     'cmdline':[ '/home/eric/.nvm/versions/node/v18.12.1/bin/vim-language-server' , '--stdio' ]
+  \   },
+  \ ]
+let g:ycm_error_symbol = '!!'
 
 " Add syntax check  
-Plugin 'dense-analysis/ale'
-" Specify language server for specific filetype 
-let g:ale_linters = {
-  \ 'javascript': ['eslint'],
-  \ 'vim'       : ['vimls'],
-  \ 'vhdl'      : ['xvhdl'],
-  \}
-" language server options:
-let g:ale_vhdl_xvhdl_options = '--nolog'
-
-" Open vim loclist whenever there is error or warning
-let g:ale_open_list = 1
+"Plugin 'dense-analysis/ale'
+" In ~/.vim/vimrc, or somewhere similar.
+"let g:ale_linters = {
+"  \ 'javascript': ['eslint'],
+"  \ 'vim'       : [],
+"  \}
 
 " Add PEP 8 checking for python
 Plugin 'nvie/vim-flake8'
 
 " trying out some color scheme
-Plugin 'jnurmine/Zenburn' 
+Plugin 'jnurmine/Zenburn'
 
 " file system explorer in VIM
 Plugin 'preservim/nerdtree'
@@ -207,10 +201,13 @@ augroup vimrcEx
   
   " Start NERDTree. If a file is specified, move the cursor to its window.
   autocmd StdinReadPre * let s:std_in=1
-  autocmd VimEnter * set columns=120 lines=70 | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+  "autocmd VimEnter * set columns=120 lines=70 | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+  " remove the setting for terminal size as in wsl ubuntu it is control by windows terminal
+  autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
   
   " Exit Vim if NERDTree is the only window remaining in the only tab.
-  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | set columns=100 lines=30 | quit | endif
+  "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | set columns=100 lines=30 | quit | endif
+  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
   
   " enable python syntax highlighting
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
@@ -225,7 +222,7 @@ augroup vimrcEx
   au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
   
   " Restore the normal terminal size when leaving vim
-  au VimLeave * set columns=100 lines=30
+  "au VimLeave * set columns=100 lines=30
 
   au VimEnter * call AirlineInit() 
 augroup END
@@ -275,3 +272,10 @@ else
 endif
 
 set laststatus=2
+
+" Enable mouse support
+set mouse=a
+
+" highlight current line
+set cursorline
+:highlight Cursorline cterm=bold ctermbg=0
