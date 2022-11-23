@@ -186,8 +186,8 @@ endfunction
 augroup vimrcEx
   au!
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  " For all text files set 'textwidth' to 88 characters.
+  autocmd FileType text setlocal textwidth=88
 
   " follow PEP8 coding style for python code
   au BufNewFile,BufRead *.py
@@ -201,13 +201,15 @@ augroup vimrcEx
   
   " Start NERDTree. If a file is specified, move the cursor to its window.
   autocmd StdinReadPre * let s:std_in=1
-  "autocmd VimEnter * set columns=120 lines=70 | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-  " remove the setting for terminal size as in wsl ubuntu it is control by windows terminal
-  autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+  " If using Ubuntu terminal change the size, changing size in windows
+  " terminal will cause errors
+  autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+  "remove the setting for terminal size as in wsl ubuntu
+  "autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
   
   " Exit Vim if NERDTree is the only window remaining in the only tab.
-  "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | set columns=100 lines=30 | quit | endif
-  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
+  "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
   
   " enable python syntax highlighting
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
@@ -222,7 +224,7 @@ augroup vimrcEx
   au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
   
   " Restore the normal terminal size when leaving vim
-  "au VimLeave * set columns=100 lines=30
+  au VimLeave * if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif
 
   au VimEnter * call AirlineInit() 
 augroup END
@@ -278,4 +280,4 @@ set mouse=a
 
 " highlight current line
 set cursorline
-:highlight Cursorline cterm=bold ctermbg=0
+:highlight Cursorline ctermbg=238

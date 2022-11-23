@@ -1,4 +1,4 @@
-This files contains instruction how to set the work environment for Eric Xu in Linux(Ubuntu)
+This files contains instructions how to set the linux(ubuntu) work environment in work with dotfiles.
 
 # GIT and GITHUB configuration
   1. Install Git using apt
