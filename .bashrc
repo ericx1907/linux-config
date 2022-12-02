@@ -123,18 +123,20 @@ fi
 # source /opt/Xilinx/14.7/ISE_DS/settings64.sh
 
 #this command will load the necessary library for Xilinx impact to work
-export LD_PRELOAD=/opt/Xilinx/14.7/usb-driver/libusb-driver.so
-
-#source /opt/Xilinx/14.7/ISE_DS/settings64.sh
+if [ -s /opt/Xilinx/14.7/usb-driver/libusb-driver.so ]; then 
+  export LD_PRELOAD=/opt/Xilinx/14.7/usb-driver/libusb-driver.so
+fi
 
 #set the shell in vi mode
 set -o vi
 
 #start powerline status bar
-powerline-daemon -q
-POWERLINE_BASH_CONTINUATION=1
-POWERLINE_BASH_SELECT=1
-. /usr/share/powerline/bindings/bash/powerline.sh
+if [ -s /usr/share/powerline/bindings/bash/powerline.sh ]; then
+  powerline-daemon -q
+  POWERLINE_BASH_CONTINUATION=1
+  POWERLINE_BASH_SELECT=1
+  . /usr/share/powerline/bindings/bash/powerline.sh
+fi
 
 #add fd(fdfind) to the executable path
 export PATH=$HOME/.local/bin:$PATH
@@ -145,15 +147,23 @@ export BAT_THEME="zenburn"
 #fzf settings 
 #make fzf(fuzzy finder/filter) to use fdfind by default instead of find
 #it follows symbolic links and includes hidden files (but exclude .git folders)
-export FZF_DEFAULT_COMMAND='fd --type file --strip-cwd-prefix --follow --hidden --exclude .git' 
+export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git' 
 #if using fd's colored output inside fzf, add --ansi in the option and --color=always in the above command
 export FZF_DEFAULT_OPTS="--ansi --height=90% --layout=reverse --info=inline --border"
 
-#enable fzf bash autocompletion 
-source /usr/share/bash-completion/completions/fzf 
-
-#enable fzf bash key-bindings
-source /usr/share/doc/fzf/examples/key-bindings.bash
+# if fzf is installed by git then source the offical script to enable  
+# autocomplete and keybinds
+if [ -s ~/.fzf.bash ]; then
+  source ~/.fzf.bash
+else
+# source script if installed by apt package manager
+  if [ -s /usr/share/bash-completion/completions/fzf ]; then
+    source /usr/share/bash-completion/completions/fzf
+  fi
+  if [ -s /usr/share/doc/fzf/examples/key-bindings.bash ]; then
+    source /usr/share/doc/fzf/examples/key-bindings.bash
+  fi
+fi
 
 #single quote tab completion behavior
 #use ' as the trigger sequence instead of the default **
@@ -174,13 +184,14 @@ _fzf_setup_completion path bat
 _fzf_setup_completion dir tree
 
 #fzf ctrl-t and alt-c behavior
-export FZF_CTRL_T_COMMAND="fd --strip-cwd-prefix --hidden --follow --exclude .git"
-export FZF_ALT_C_COMMAND="fd -t d --strip-cwd-prefix --hidden --follow --exclude .git"
+export FZF_CTRL_T_COMMAND="fd --hidden --follow --exclude .git"
+export FZF_ALT_C_COMMAND="fd -t d --hidden --follow --exclude .git"
 export FZF_ALT_C_OPTS="--height=60% --preview 'tree -C {} | head -200'"
 
 #Enable Xilinx tools
-source /tools/Xilinx/Vivado/2022.1/settings64.sh
-#source /tools/Xilinx/Vitis/2022.1/settings64.sh
+if [ -s /tools/Xilinx/Vivado/2022.1/settings64.sh ]; then
+  source /tools/Xilinx/Vivado/2022.1/settings64.sh
+fi
 
 #Load nvm (node version manager) in each shell session
 export NVM_DIR="$HOME/.nvm"
