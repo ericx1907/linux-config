@@ -171,16 +171,16 @@ export FZF_COMPLETION_TRIGGER="''"
 
 #use fd instead the default find for path completion
 _fzf_compgen_path() {
-  fd --hidden --follow --exclude ".git" . "$1"
+  fd --hidden --exclude ".git" . "$1"
 }
 
 #use fd to generate the list for directory completion
 _fzf_compgen_dir() {
-  fd --type d --hidden --follow --exclude ".git" . "$1"
+  fd --type d --hidden --exclude ".git" . "$1"
 }
 
 #add fzf completion in bash for other commands
-_fzf_setup_completion path bat
+_fzf_setup_completion path bat dpkg
 _fzf_setup_completion dir tree
 
 #fzf ctrl-t and alt-c behavior
@@ -198,5 +198,10 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-#Tell vim we are using Ubuntu terminal
-export TERM_UBUNTU=1
+# Test if we are running MS WSL Linux or native Linux
+# If the formmer is true then the terminal is controlled by windows terminal
+if grep -qi microsoft /proc/version; then
+  export TERM_UBUNTU=0
+else
+  export TERM_UBUNTU=1
+fi
