@@ -215,10 +215,11 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
   
   " 2 whitespace indent for vhdl souce file
-  au BufNewFile,BufRead *.vhdl
+  au BufNewFile,BufRead *.md *.Rmd *.vhdl
       \ set tabstop=2
       \ set softtabstop=2
       \ set shiftwidth=2
+      \ set expandtab
   
   " Flag unnecessary whitespace
   au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
