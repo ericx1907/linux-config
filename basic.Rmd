@@ -3,7 +3,9 @@ title: "Basic R Markdown"
 author: "Eric Xu"
 date: "2023-02-14"
 output:
-  github_document: default
+  github_document: 
+    preserve_yaml: FALSE
+    html_preview: FALSE
   html_document: default
 ---
 
@@ -12,6 +14,7 @@ output:
 ```{r, echo = FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
+# This is a title
 
 This is first Paragraph
 This is still the first praagraph.

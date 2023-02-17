@@ -5,6 +5,8 @@ Eric Xu
 
 <!-- basic.md is generated from basic.Rmd. Please edit that file -->
 
+# This is a title
+
 This is first Paragraph This is still the first praagraph.
 
 Below is a code chunk:
