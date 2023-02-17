@@ -14,7 +14,7 @@ plot(cars)
 abline(fit)
 ```
 
-![](basic_files/figure-gfm/unnamed-chunk-2-1.png)<!-- -->
+![](basic_files/figure-gfm/plot-slope-1.png)<!-- -->
 
 The slope of the regression is -17.5790949.
 
@@ -26,3 +26,5 @@ A & = \frac{\pi r^2}{2} \\
   & = \frac{1}{2} \pi r^2
 \end{split}
 \end{equation}$$
+
+In R, the character \# indicates a comment.

@@ -8,7 +8,7 @@ output:
 
 <!-- basic.md is generated from basic.Rmd. Please edit that file -->
 
-```{r, echo = FALSE}
+```{r, include=FALSE}
 knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
 ```
 # This is a title
@@ -19,7 +19,7 @@ This is still the first praagraph.
 
 Below is a code chunk:
 
-```{r}
+```{r, plot-slope}
 fit = lm(dist ~ speed, data = cars)
 b   = coef(fit)
 plot(cars)
@@ -35,3 +35,6 @@ A & = \frac{\pi r^2}{2} \\
   & = \frac{1}{2} \pi r^2
 \end{split}
 \end{equation}$$
+
+In R, the character
+\# indicates a comment.
