@@ -1,7 +1,3 @@
-Basic R Markdown
-================
-Eric Xu
-2023-02-14
 
 <!-- basic.md is generated from basic.Rmd. Please edit that file -->
 

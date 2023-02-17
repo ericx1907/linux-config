@@ -1,7 +1,4 @@
 ---
-title: "Basic R Markdown"
-author: "Eric Xu"
-date: "2023-02-14"
 output:
   github_document: 
     preserve_yaml: FALSE
