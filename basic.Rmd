@@ -8,8 +8,12 @@ output:
 
 <!-- basic.md is generated from basic.Rmd. Please edit that file -->
 
-```{r, include=FALSE}
-knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```{r, setup, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE, 
+  python.reticulate = FALSE
+)
+use_python("/usr/bin/python3")
 ```
 # This is a title
 
@@ -38,3 +42,8 @@ A & = \frac{\pi r^2}{2} \\
 
 In R, the character
 \# indicates a comment.
+
+```{python}
+x = 'hello, python world!'
+print(x.split(' '))
+```
