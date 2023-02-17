@@ -3,9 +3,15 @@ title: "Basic R Markdown"
 author: "Eric Xu"
 date: "2023-02-14"
 output:
-  html_document:
-    keep_md: true
+  github_document: default
+  html_document: default
 ---
+
+<!-- basic.md is generated from basic.Rmd. Please edit that file -->
+
+```{r, echo = FALSE}
+knitr::opts_chunk$set(collapse = TRUE, comment = "#>")
+```
 
 This is first Paragraph
 This is still the first praagraph.
