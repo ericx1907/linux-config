@@ -13,11 +13,14 @@ This is still the first praagraph.
 
 Below is a code chunk:
 
-```{r}
+
+```r
 fit = lm(dist ~ speed, data = cars)
 b   = coef(fit)
 plot(cars)
 abline(fit)
 ```
 
-The slope of the regression is `r b[1]`.
+![](basic_files/figure-html/unnamed-chunk-1-1.png)<!-- -->
+
+The slope of the regression is -17.5790949.
