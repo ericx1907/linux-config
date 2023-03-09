@@ -6,3 +6,5 @@ This is second paragraph.
 
 This is 4th change. 
 This is second 5th change.
+
+This is local change.
