@@ -28,3 +28,17 @@ A & = \frac{\pi r^2}{2} \\
 \end{equation}$$
 
 In R, the character \# indicates a comment.
+
+``` python
+import sys
+import time
+print(sys.version)
+t = time.localtime()
+current_time = time.strftime("%H:%M:%S", t)
+print(current_time)
+x = 'hello, python world! wow this is amazing'
+print(x.split(' '))
+## 3.10.6 (main, Nov 14 2022, 16:10:14) [GCC 11.3.0]
+## 16:31:07
+## ['hello,', 'python', 'world!', 'wow', 'this', 'is', 'amazing']
+```

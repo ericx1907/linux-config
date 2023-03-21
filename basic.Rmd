@@ -11,10 +11,13 @@ output:
 ```{r, setup, include=FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE, 
-  python.reticulate = FALSE
+  python.reticulate = FALSE,
+  engine.path = list(
+    python = '/usr/bin/python3'
+  )
 )
-use_python("/usr/bin/python3")
 ```
+
 # This is a title
 
 This is first Paragraph
@@ -44,6 +47,13 @@ In R, the character
 \# indicates a comment.
 
 ```{python}
-x = 'hello, python world!'
+import sys
+import time
+print(sys.version)
+t = time.localtime()
+current_time = time.strftime("%H:%M:%S", t)
+print(current_time)
+x = 'hello, python world! wow this is amazing'
 print(x.split(' '))
 ```
+

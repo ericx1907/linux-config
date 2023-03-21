@@ -372,6 +372,17 @@ A &amp; = \frac{\pi r^2}{2} \\
 \end{split}
 \end{equation}\]</span></p>
 <p>In R, the character # indicates a comment.</p>
+<pre class="python"><code>import sys
+import time
+print(sys.version)
+t = time.localtime()
+current_time = time.strftime(&quot;%H:%M:%S&quot;, t)
+print(current_time)
+x = &#39;hello, python world! wow this is amazing&#39;
+print(x.split(&#39; &#39;))
+## 3.10.6 (main, Nov 14 2022, 16:10:14) [GCC 11.3.0]
+## 16:31:07
+## [&#39;hello,&#39;, &#39;python&#39;, &#39;world!&#39;, &#39;wow&#39;, &#39;this&#39;, &#39;is&#39;, &#39;amazing&#39;]</code></pre>
 </div>
 </div>
 
