@@ -1,13 +1,25 @@
-1. Continue to investigate how to write documents using R markdown in VIM.
+* Continue to investigate how to write documents using R markdown in VIM.
 
-2. **Continue** to learn Git. Some useful resources:
+* Continue to learn how to use VIM efficiently
+
+* Continue to learn Git. Some useful resources:
   
-  - [happy git with r](https://happygitwithr.com/)
+    - [happy git with r](https://happygitwithr.com/)
 
-  - [git offical documentation](https://git-scm.com/doc)
+    - [git offical documentation](https://git-scm.com/doc)
 
-8. Continue to learn regular expression (regex)
+* Continue to learn regular expression (regex)
 
-  - [test regular expression online](https://regex101.com/)
+    - [test regular expression online](https://regex101.com/)
 
-  - [tutorial](https://www.rexegg.com/regex-quantifiers.html#greedy)
+    - [tutorial](https://www.rexegg.com/regex-quantifiers.html#greedy)
+
+* Replace vundle with vim-plug in .vimrc
+
+* Continue test LSP using YouCompleteMe
+
+* Find a good LSP client for vim, possible candidate: [coc.nvim](https://github.com/neoclide/coc.nvim)
+
+* Find a good vhdl LSP server that can be used with vim
+
+* Find a good systemverilog LSP server
