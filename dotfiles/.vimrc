@@ -143,8 +143,8 @@ function! AirlineInit()
   endif
   
   " unicode symbols
-  "let g:airline_left_sep = '»'
-  "let g:airline_left_sep = '▶'
+  let g:airline_left_sep = '»'
+  let g:airline_left_sep = '▶'
   let g:airline_right_sep = '«'
   let g:airline_right_sep = '◀'
   let g:airline_symbols.colnr = ' ㏇:'
@@ -165,11 +165,9 @@ function! AirlineInit()
   let g:airline_symbols.whitespace = 'Ξ'
 
   " powerline symbols
-  let g:airline_left_sep = "\U1F63A"
-  "let g:airline_left_sep = "\uE0C0"
+  let g:airline_left_sep = ""
   let g:airline_left_alt_sep = ''
   let g:airline_right_sep = ''
-  "let g:airline_right_sep = "\uE0C2"
   let g:airline_right_alt_sep = ''
   let g:airline_symbols.branch = ''
   let g:airline_symbols.colnr = ' ℅:'
@@ -185,14 +183,14 @@ function! AirlineInit()
   let g:airline#extensions#ycm#enabled = 1
 endfunction
 
-"augroup MyYCMCustom
-"  autocmd!
-"  autocmd FileType vim let b:ycm_hover = {
-"    \ 'command': 'GetHover',
-"    \ 'syntax': &filetype
-"    \ }
-"augroup END
-
+augroup MyYCMCustom
+  autocmd!
+  autocmd FileType vim let b:ycm_hover = {
+    \ 'command': 'GetHover',
+    \ 'syntax': &filetype
+    \ } 
+augroup END
+	
 " Put all autocmd in an autocmd group, so that we can reload vimrc safely.
 augroup vimrcEx
   au!
