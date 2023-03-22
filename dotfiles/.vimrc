@@ -48,9 +48,10 @@ nmap <leader>ysw <Plug>(YCMFindSymbolInWorkspace)
 nmap <leader>ysd <Plug>(YCMFindSymbolInDocument)
 " Additional LSP server for other languages
 let g:ycm_language_server = [
-  \   { 'name': 'vim',
+  \   { 
+  \	'name': 'vim',
   \     'filetypes': [ 'vim' ],
-  \     'cmdline':[ '/home/eric/.nvm/versions/node/v18.12.1/bin/vim-language-server' , '--stdio' ]
+  \     'cmdline':[ 'vim-language-server' , '--stdio' ]
   \   },
   \ ]
 let g:ycm_error_symbol = '!!'
@@ -142,8 +143,8 @@ function! AirlineInit()
   endif
   
   " unicode symbols
-  let g:airline_left_sep = '»'
-  let g:airline_left_sep = '▶'
+  "let g:airline_left_sep = '»'
+  "let g:airline_left_sep = '▶'
   let g:airline_right_sep = '«'
   let g:airline_right_sep = '◀'
   let g:airline_symbols.colnr = ' ㏇:'
@@ -164,9 +165,11 @@ function! AirlineInit()
   let g:airline_symbols.whitespace = 'Ξ'
 
   " powerline symbols
-  let g:airline_left_sep = ''
+  let g:airline_left_sep = "\U1F63A"
+  "let g:airline_left_sep = "\uE0C0"
   let g:airline_left_alt_sep = ''
   let g:airline_right_sep = ''
+  "let g:airline_right_sep = "\uE0C2"
   let g:airline_right_alt_sep = ''
   let g:airline_symbols.branch = ''
   let g:airline_symbols.colnr = ' ℅:'
@@ -182,6 +185,14 @@ function! AirlineInit()
   let g:airline#extensions#ycm#enabled = 1
 endfunction
 
+"augroup MyYCMCustom
+"  autocmd!
+"  autocmd FileType vim let b:ycm_hover = {
+"    \ 'command': 'GetHover',
+"    \ 'syntax': &filetype
+"    \ }
+"augroup END
+
 " Put all autocmd in an autocmd group, so that we can reload vimrc safely.
 augroup vimrcEx
   au!
@@ -191,13 +202,13 @@ augroup vimrcEx
 
   " follow PEP8 coding style for python code
   au BufNewFile,BufRead *.py
-      \ set tabstop=4
-      \ set softtabstop=4
-      \ set shiftwidth=4
-      \ set textwidth=79
-      \ set expandtab
-      \ set autoindent
-      \ set fileformat=unix
+      \ set tabstop=4 | 
+      \ set softtabstop=4 |
+      \ set shiftwidth=4 |
+      \ set textwidth=79 |
+      \ set expandtab |
+      \ set autoindent |
+      \ set fileformat=unix 
   
   " Start NERDTree. If a file is specified, move the cursor to its window.
   autocmd StdinReadPre * let s:std_in=1
@@ -215,16 +226,15 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
   
   " 2 whitespace indent for vhdl souce file
-  au BufNewFile,BufRead *.md *.Rmd *.vhdl
-      \ set tabstop=2
-      \ set softtabstop=2
-      \ set shiftwidth=2
+  au BufNewFile,BufRead *.md,*.Rmd,*.vhd
+      \ set tabstop=2 |
+      \ set softtabstop=2 |
+      \ set shiftwidth=2 |
       \ set expandtab
   
   " Flag unnecessary whitespace
   au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
   
-  " Restore the normal terminal size when leaving vim
   au VimLeave * if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif
 
   au VimEnter * call AirlineInit() 
@@ -282,6 +292,9 @@ set mouse=a
 " highlight current line
 set cursorline
 :highlight Cursorline ctermbg=238
+
+"show extrx info about completion candiate in popup window
+set completeopt=popup,menuone
 
 """"""""""""""""""
 " Custom Command "
