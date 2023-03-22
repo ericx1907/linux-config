@@ -10,35 +10,29 @@
 "	      for Haiku:  ~/config/settings/vim/vimrc
 "	    for OpenVMS:  sys$login:.vimrc
 
-
-""""""""""""""""""
-" Plugin Manager "
-""""""""""""""""""
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-
 " set the leader key
 let mapleader="," 
 
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+"""""""""""""""""""""""""""
+" vim-plug plugin manager "
+"""""""""""""""""""""""""""
+call plug#begin() 
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Make sure you use single quotes
 
-" simple fold Plugin 'tmhedberg/SimpylFold'
-let g:SimpylFold_docstring_preview=1
 
 " better handle auto-indentation in python
-Plugin 'vim-scripts/indentpython.vim'
+Plug 'vim-scripts/indentpython.vim'
 
-" Auto completion engine for various language (c-family, python3, java, rust,
-" etc)
-Plugin 'ycm-core/YouCompleteMe'
+" Auto completion engine for various language (c-family, python3, java, rust, etc)
+Plug 'ycm-core/YouCompleteMe'
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " :lopen and :lclose to see the full diagnostic message for the current file
@@ -57,7 +51,7 @@ let g:ycm_language_server = [
 let g:ycm_error_symbol = '!!'
 
 " Add syntax check  
-"Plugin 'dense-analysis/ale'
+"Plug 'dense-analysis/ale'
 " In ~/.vim/vimrc, or somewhere similar.
 "let g:ale_linters = {
 "  \ 'javascript': ['eslint'],
@@ -65,43 +59,35 @@ let g:ycm_error_symbol = '!!'
 "  \}
 
 " Add PEP 8 checking for python
-Plugin 'nvie/vim-flake8'
+Plug 'nvie/vim-flake8'
 
 " trying out some color scheme
-Plugin 'jnurmine/Zenburn'
+Plug 'jnurmine/Zenburn'
 
 " file system explorer in VIM
-Plugin 'preservim/nerdtree'
+Plug 'preservim/nerdtree'
 let NERDTreeShowHidden=1 
 
 " fuzzy finder 
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " Airline statusbar and theme
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Git Intergration
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " unicode support
-Plugin 'chrisbra/unicode.vim'
+Plug 'chrisbra/unicode.vim'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()            " required
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
+"   syntax off            " Disable syntax highlighting
 
 
 """"""""""""""""""""
