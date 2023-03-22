@@ -11,12 +11,12 @@
 "	    for OpenVMS:  sys$login:.vimrc
 
 " set the leader key
-let mapleader="," 
+let mapleader=","
 
 """""""""""""""""""""""""""
 " vim-plug plugin manager "
 """""""""""""""""""""""""""
-call plug#begin() 
+call plug#begin()
 " The default plugin directory will be as follows:
 "   - Vim (Linux/macOS): '~/.vim/plugged'
 "   - Vim (Windows): '~/vimfiles/plugged'
@@ -42,7 +42,7 @@ nmap <leader>ysw <Plug>(YCMFindSymbolInWorkspace)
 nmap <leader>ysd <Plug>(YCMFindSymbolInDocument)
 " Additional LSP server for other languages
 let g:ycm_language_server = [
-  \   { 
+  \   {
   \	'name': 'vim',
   \     'filetypes': [ 'vim' ],
   \     'cmdline':[ 'vim-language-server' , '--stdio' ]
@@ -50,13 +50,17 @@ let g:ycm_language_server = [
   \ ]
 let g:ycm_error_symbol = '!!'
 
-" Add syntax check  
-"Plug 'dense-analysis/ale'
+" Add syntax check
+Plug 'dense-analysis/ale'
+" Only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 1
+" Disable ALE's own LSP functionality beacuse using YCM
+let g:ale_disable_lsp = 1
 " In ~/.vim/vimrc, or somewhere similar.
-"let g:ale_linters = {
-"  \ 'javascript': ['eslint'],
-"  \ 'vim'       : [],
-"  \}
+let g:ale_linters = {
+  \ 'javascript': ['eslint'],
+  \ 'vhdl'      : ['xvhdl'],
+  \}
 
 " Add PEP 8 checking for python
 Plug 'nvie/vim-flake8'
@@ -66,9 +70,9 @@ Plug 'jnurmine/Zenburn'
 
 " file system explorer in VIM
 Plug 'preservim/nerdtree'
-let NERDTreeShowHidden=1 
+let NERDTreeShowHidden=1
 
-" fuzzy finder 
+" fuzzy finder
 Plug 'junegunn/fzf'
 Plug 'junegunn/fzf.vim'
 
@@ -106,7 +110,7 @@ if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
 else
   set backup		" keep a backup file (restore to previous version)
-  set backupdir=~/.vim/tmp/ 
+  set backupdir=~/.vim/tmp/
   set dir=~/.vim/tmp " set the directory for swap files
   "if has('persistent_undo')
   "  set undofile	" keep an undo file (undo changes after closing)
@@ -118,7 +122,7 @@ if &t_Co > 2 || has("gui_running")
   set hlsearch
 endif
 
-" Initilize vim ariline status bar 
+" Initilize vim ariline status bar
 function! AirlineInit()
   let g:airline#extensions#branch#enabled = 1
  " let g:airline_section_b = airline#section#create_left(['hunks'])
@@ -127,7 +131,7 @@ function! AirlineInit()
   if !exists('g:airline_symbols')
     let g:airline_symbols = {}
   endif
-  
+
   " unicode symbols
   let g:airline_left_sep = '»'
   let g:airline_left_sep = '▶'
@@ -161,9 +165,9 @@ function! AirlineInit()
   let g:airline_symbols.linenr = ' :'
   let g:airline_symbols.maxlinenr = '☰ '
   let g:airline_symbols.dirty='⚡'
-   
+
   let g:airline_theme='zenburn'
-  
+
   let g:airline#extensions#ale#enabled = 1
   let g:airline#extensions#fzf#enabled = 1
   let g:airline#extensions#ycm#enabled = 1
@@ -174,9 +178,9 @@ augroup MyYCMCustom
   autocmd FileType vim let b:ycm_hover = {
     \ 'command': 'GetHover',
     \ 'syntax': &filetype
-    \ } 
+    \ }
 augroup END
-	
+
 " Put all autocmd in an autocmd group, so that we can reload vimrc safely.
 augroup vimrcEx
   au!
@@ -186,14 +190,14 @@ augroup vimrcEx
 
   " follow PEP8 coding style for python code
   au BufNewFile,BufRead *.py
-      \ set tabstop=4 | 
+      \ set tabstop=4 |
       \ set softtabstop=4 |
       \ set shiftwidth=4 |
       \ set textwidth=79 |
       \ set expandtab |
       \ set autoindent |
-      \ set fileformat=unix 
-  
+      \ set fileformat=unix
+
   " Start NERDTree. If a file is specified, move the cursor to its window.
   autocmd StdinReadPre * let s:std_in=1
   " If using Ubuntu terminal change the size, changing size in windows
@@ -201,27 +205,27 @@ augroup vimrcEx
   autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
   "remove the setting for terminal size as in wsl ubuntu
   "autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-  
+
   " Exit Vim if NERDTree is the only window remaining in the only tab.
   autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
   "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-  
+
   " enable python syntax highlighting
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
-  
+
   " 2 whitespace indent for vhdl souce file
   au BufNewFile,BufRead *.md,*.Rmd,*.vhd
       \ set tabstop=2 |
       \ set softtabstop=2 |
       \ set shiftwidth=2 |
       \ set expandtab
-  
+
   " Flag unnecessary whitespace
   au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-  
+
   au VimLeave * if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif
 
-  au VimEnter * call AirlineInit() 
+  au VimEnter * call AirlineInit()
 augroup END
 
 " Add optional packages.
@@ -235,20 +239,22 @@ if has('syntax') && has('eval')
 endif
 
 " turn on line numbers for all files
-set number 
+set number
 
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
 
 " Enable folding with the spacebar
-nnoremap <space> za 
+nnoremap <space> za
 
 " Using UTF-8 enconding
 set encoding=utf-8
-
-" Some leader shortcuts
+lclose
+" Some key mapping
 nmap <leader>h :noh<CR>
+nmap <leader>l :lopen<CR>
+nmap <leader>c :lclose<CR>
 
 " python with virtualenv support
 py3 << EOF
