@@ -68,6 +68,7 @@ HIST_STAMPS="mm/dd/yyyy"
 ################
 # fzf settings #
 ################
+# Tells fzf plugin the base directory 
 export FZF_BASE=/home/ericx/.fzf
 
 #make fzf(fuzzy finder/filter) to use fdfind by default instead of find
@@ -90,7 +91,8 @@ _fzf_compgen_dir() {
   fd --type d --hidden --exclude ".git" . "$1"
 }
 
-#add fzf completion in bash for other commands
+# Add fzf completion in bash for other commands
+# Only needed for bash
 #_fzf_setup_completion path bat dpkg
 #_fzf_setup_completion dir tree
 
@@ -108,7 +110,9 @@ plugins=(git fzf)
 
 source $ZSH/oh-my-zsh.sh
 
-# User configuration
+######################
+# User configuration #
+###################### 
 # Some helper on completion
 setopt nomatch 
 setopt notify 
@@ -153,4 +157,10 @@ alias ll='ls -lFh'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-# [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+# Test if we are running MS WSL Linux or native Linux
+# If the formmer is true then the terminal is controlled by windows terminal
+if grep -qi microsoft /proc/version; then
+  export TERM_UBUNTU=0
+else
+  export TERM_UBUNTU=1
+fi
