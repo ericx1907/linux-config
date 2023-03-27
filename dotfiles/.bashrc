@@ -123,7 +123,7 @@ fi
 # source /opt/Xilinx/14.7/ISE_DS/settings64.sh
 
 #this command will load the necessary library for Xilinx impact to work
-if [ -s /opt/Xilinx/14.7/usb-driver/libusb-driver.so ]; then 
+if [ -s /opt/Xilinx/14.7/usb-driver/libusb-driver.so ]; then
   export LD_PRELOAD=/opt/Xilinx/14.7/usb-driver/libusb-driver.so
 fi
 
@@ -144,14 +144,14 @@ export PATH=$HOME/.local/bin:$PATH
 #change bat theme to zenburn
 export BAT_THEME="zenburn"
 
-#fzf settings 
+#fzf settings
 #make fzf(fuzzy finder/filter) to use fdfind by default instead of find
 #it follows symbolic links and includes hidden files (but exclude .git folders)
-export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git' 
+export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
 #if using fd's colored output inside fzf, add --ansi in the option and --color=always in the above command
-export FZF_DEFAULT_OPTS="--ansi --height=90% --layout=reverse --info=inline --border"
+export FZF_DEFAULT_OPTS="--ansi --height=60% --layout=reverse --info=inline --border"
 
-# if fzf is installed by git then source the offical script to enable  
+# if fzf is installed by git then source the offical script to enable
 # autocomplete and keybinds
 if [ -s ~/.fzf.bash ]; then
   source ~/.fzf.bash
@@ -188,10 +188,8 @@ export FZF_CTRL_T_COMMAND="fd --hidden --follow --exclude .git"
 export FZF_ALT_C_COMMAND="fd -t d --hidden --follow --exclude .git"
 export FZF_ALT_C_OPTS="--height=60% --preview 'tree -C {} | head -200'"
 
-#Enable Xilinx tools
-if [ -s /tools/Xilinx/Vivado/2022.1/settings64.sh ]; then
-  source /tools/Xilinx/Vivado/2022.1/settings64.sh
-fi
+# Add xvhdl to path vairable so vim can use it
+[ -s /tools/Xilinx/Vivado/2022.1/bin/xvhdl ] && PATH="/tools/Xilinx/Vivado/2022.1/bin:$PATH"
 
 #Load nvm (node version manager) in each shell session
 export NVM_DIR="$HOME/.nvm"

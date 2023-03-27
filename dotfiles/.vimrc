@@ -10,35 +10,29 @@
 "	      for Haiku:  ~/config/settings/vim/vimrc
 "	    for OpenVMS:  sys$login:.vimrc
 
-
-""""""""""""""""""
-" Plugin Manager "
-""""""""""""""""""
-set nocompatible              " be iMproved, required
-filetype off                  " required
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-
 " set the leader key
-let mapleader="," 
+let mapleader=","
 
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
+"""""""""""""""""""""""""""
+" vim-plug plugin manager "
+"""""""""""""""""""""""""""
+call plug#begin()
+" The default plugin directory will be as follows:
+"   - Vim (Linux/macOS): '~/.vim/plugged'
+"   - Vim (Windows): '~/vimfiles/plugged'
+"   - Neovim (Linux/macOS/Windows): stdpath('data') . '/plugged'
+" You can specify a custom plugin directory by passing it as the argument
+"   - e.g. `call plug#begin('~/.vim/plugged')`
+"   - Avoid using standard Vim directory names like 'plugin'
 
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+" Make sure you use single quotes
 
-" simple fold Plugin 'tmhedberg/SimpylFold'
-let g:SimpylFold_docstring_preview=1
 
 " better handle auto-indentation in python
-Plugin 'vim-scripts/indentpython.vim'
+Plug 'vim-scripts/indentpython.vim'
 
-" Auto completion engine for various language (c-family, python3, java, rust,
-" etc)
-Plugin 'ycm-core/YouCompleteMe'
+" Auto completion engine for various language (c-family, python3, java, rust, etc)
+Plug 'ycm-core/YouCompleteMe'
 let g:ycm_autoclose_preview_window_after_completion=1
 nnoremap <leader>g :YcmCompleter GoToDefinitionElseDeclaration<CR>
 " :lopen and :lclose to see the full diagnostic message for the current file
@@ -48,7 +42,7 @@ nmap <leader>ysw <Plug>(YCMFindSymbolInWorkspace)
 nmap <leader>ysd <Plug>(YCMFindSymbolInDocument)
 " Additional LSP server for other languages
 let g:ycm_language_server = [
-  \   { 
+  \   {
   \	'name': 'vim',
   \     'filetypes': [ 'vim' ],
   \     'cmdline':[ 'vim-language-server' , '--stdio' ]
@@ -56,52 +50,48 @@ let g:ycm_language_server = [
   \ ]
 let g:ycm_error_symbol = '!!'
 
-" Add syntax check  
-"Plugin 'dense-analysis/ale'
+" Add syntax check
+Plug 'dense-analysis/ale'
+" Only run linters named in ale_linters settings.
+let g:ale_linters_explicit = 1
+" Disable ALE's own LSP functionality beacuse using YCM
+let g:ale_disable_lsp = 1
 " In ~/.vim/vimrc, or somewhere similar.
-"let g:ale_linters = {
-"  \ 'javascript': ['eslint'],
-"  \ 'vim'       : [],
-"  \}
+let g:ale_linters = {
+  \ 'javascript': ['eslint'],
+  \ 'vhdl'      : ['xvhdl'],
+  \}
 
 " Add PEP 8 checking for python
-Plugin 'nvie/vim-flake8'
+Plug 'nvie/vim-flake8'
 
 " trying out some color scheme
-Plugin 'jnurmine/Zenburn'
+Plug 'jnurmine/Zenburn'
 
 " file system explorer in VIM
-Plugin 'preservim/nerdtree'
-let NERDTreeShowHidden=1 
+Plug 'preservim/nerdtree'
+let NERDTreeShowHidden=1
 
-" fuzzy finder 
-Plugin 'junegunn/fzf'
-Plugin 'junegunn/fzf.vim'
+" fuzzy finder
+Plug 'junegunn/fzf'
+Plug 'junegunn/fzf.vim'
 
 " Airline statusbar and theme
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Git Intergration
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 
 " unicode support
-Plugin 'chrisbra/unicode.vim'
+Plug 'chrisbra/unicode.vim'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
-" To ignore plugin indent changes, instead use:
-"filetype plugin on
-"
-" Brief help
-" :PluginList       - lists configured plugins
-" :PluginInstall    - installs plugins; append `!` to update or just :PluginUpdate
-" :PluginSearch foo - searches for foo; append `!` to refresh local cache
-" :PluginClean      - confirms removal of unused plugins; append `!` to auto-approve removal
-"
-" see :h vundle for more details or wiki for FAQ
-" Put your non-Plugin stuff after this line
+" Initialize plugin system
+" - Automatically executes `filetype plugin indent on` and `syntax enable`.
+call plug#end()            " required
+" You can revert the settings after the call like so:
+"   filetype indent off   " Disable file-type-specific indentation
+"   syntax off            " Disable syntax highlighting
 
 
 """"""""""""""""""""
@@ -120,7 +110,7 @@ if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
 else
   set backup		" keep a backup file (restore to previous version)
-  set backupdir=~/.vim/tmp/ 
+  set backupdir=~/.vim/tmp/
   set dir=~/.vim/tmp " set the directory for swap files
   "if has('persistent_undo')
   "  set undofile	" keep an undo file (undo changes after closing)
@@ -132,7 +122,7 @@ if &t_Co > 2 || has("gui_running")
   set hlsearch
 endif
 
-" Initilize vim ariline status bar 
+" Initilize vim ariline status bar
 function! AirlineInit()
   let g:airline#extensions#branch#enabled = 1
  " let g:airline_section_b = airline#section#create_left(['hunks'])
@@ -141,10 +131,10 @@ function! AirlineInit()
   if !exists('g:airline_symbols')
     let g:airline_symbols = {}
   endif
-  
+
   " unicode symbols
-  "let g:airline_left_sep = '»'
-  "let g:airline_left_sep = '▶'
+  let g:airline_left_sep = '»'
+  let g:airline_left_sep = '▶'
   let g:airline_right_sep = '«'
   let g:airline_right_sep = '◀'
   let g:airline_symbols.colnr = ' ㏇:'
@@ -165,11 +155,9 @@ function! AirlineInit()
   let g:airline_symbols.whitespace = 'Ξ'
 
   " powerline symbols
-  let g:airline_left_sep = "\U1F63A"
-  "let g:airline_left_sep = "\uE0C0"
+  let g:airline_left_sep = ""
   let g:airline_left_alt_sep = ''
   let g:airline_right_sep = ''
-  "let g:airline_right_sep = "\uE0C2"
   let g:airline_right_alt_sep = ''
   let g:airline_symbols.branch = ''
   let g:airline_symbols.colnr = ' ℅:'
@@ -177,21 +165,21 @@ function! AirlineInit()
   let g:airline_symbols.linenr = ' :'
   let g:airline_symbols.maxlinenr = '☰ '
   let g:airline_symbols.dirty='⚡'
-   
+
   let g:airline_theme='zenburn'
-  
+
   let g:airline#extensions#ale#enabled = 1
   let g:airline#extensions#fzf#enabled = 1
   let g:airline#extensions#ycm#enabled = 1
 endfunction
 
-"augroup MyYCMCustom
-"  autocmd!
-"  autocmd FileType vim let b:ycm_hover = {
-"    \ 'command': 'GetHover',
-"    \ 'syntax': &filetype
-"    \ }
-"augroup END
+augroup MyYCMCustom
+  autocmd!
+  autocmd FileType vim let b:ycm_hover = {
+    \ 'command': 'GetHover',
+    \ 'syntax': &filetype
+    \ }
+augroup END
 
 " Put all autocmd in an autocmd group, so that we can reload vimrc safely.
 augroup vimrcEx
@@ -202,14 +190,14 @@ augroup vimrcEx
 
   " follow PEP8 coding style for python code
   au BufNewFile,BufRead *.py
-      \ set tabstop=4 | 
+      \ set tabstop=4 |
       \ set softtabstop=4 |
       \ set shiftwidth=4 |
       \ set textwidth=79 |
       \ set expandtab |
       \ set autoindent |
-      \ set fileformat=unix 
-  
+      \ set fileformat=unix
+
   " Start NERDTree. If a file is specified, move the cursor to its window.
   autocmd StdinReadPre * let s:std_in=1
   " If using Ubuntu terminal change the size, changing size in windows
@@ -217,27 +205,27 @@ augroup vimrcEx
   autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
   "remove the setting for terminal size as in wsl ubuntu
   "autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-  
+
   " Exit Vim if NERDTree is the only window remaining in the only tab.
   autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
   "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
-  
+
   " enable python syntax highlighting
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
-  
+
   " 2 whitespace indent for vhdl souce file
   au BufNewFile,BufRead *.md,*.Rmd,*.vhd
       \ set tabstop=2 |
       \ set softtabstop=2 |
       \ set shiftwidth=2 |
       \ set expandtab
-  
+
   " Flag unnecessary whitespace
   au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
-  
+
   au VimLeave * if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif
 
-  au VimEnter * call AirlineInit() 
+  au VimEnter * call AirlineInit()
 augroup END
 
 " Add optional packages.
@@ -251,20 +239,22 @@ if has('syntax') && has('eval')
 endif
 
 " turn on line numbers for all files
-set number 
+set number
 
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
 
 " Enable folding with the spacebar
-nnoremap <space> za 
+nnoremap <space> za
 
 " Using UTF-8 enconding
 set encoding=utf-8
-
-" Some leader shortcuts
+lclose
+" Some key mapping
 nmap <leader>h :noh<CR>
+nmap <leader>l :lopen<CR>
+nmap <leader>c :lclose<CR>
 
 " python with virtualenv support
 py3 << EOF
