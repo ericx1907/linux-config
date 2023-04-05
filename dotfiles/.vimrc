@@ -11,7 +11,7 @@
 "	    for OpenVMS:  sys$login:.vimrc
 
 " set the leader key
-let mapleader=","
+let mapleader=" "
 
 """""""""""""""""""""""""""
 " vim-plug plugin manager "
@@ -246,7 +246,7 @@ set foldmethod=indent
 set foldlevel=99
 
 " Enable folding with the spacebar
-nnoremap <space> za
+"nnoremap <space> za
 
 " Using UTF-8 enconding
 set encoding=utf-8
