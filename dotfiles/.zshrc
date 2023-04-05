@@ -8,7 +8,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster"
+ZSH_THEME="agnoster_eric"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -116,6 +116,9 @@ source $ZSH/oh-my-zsh.sh
 # Some helper on completion
 setopt nomatch 
 setopt notify 
+
+# Add xvhdl to path vairable so vim can use it
+[ -s /tools/Xilinx/Vivado/2022.1/bin/xvhdl ] && PATH="/tools/Xilinx/Vivado/2022.1/bin:$PATH"
 
 # add fd(fd-find) to the executable path
 export PATH=$HOME/.local/bin:$PATH
