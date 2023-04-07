@@ -216,7 +216,7 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 
   " 2 whitespace indent for vhdl souce file
-  au BufNewFile,BufRead *.md,*.Rmd
+  au BufNewFile,BufRead *.md,*.Rmd,*.vhd
       \ set tabstop=2 |
       \ set softtabstop=2 |
       \ set shiftwidth=2 |
@@ -255,6 +255,8 @@ set foldlevel=99
 " nnoremap <space> za
 
 " Using UTF-8 enconding
+set encoding=utf-8
+
 " Some key mapping
 nmap <leader>h :noh<CR>
 nmap <leader>l :lopen<CR>
