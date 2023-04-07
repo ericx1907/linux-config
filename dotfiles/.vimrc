@@ -102,6 +102,10 @@ call plug#end()            " required
 """"""""""""""""""""
 " General Settings "
 """"""""""""""""""""
+" Set different cursor shape in normal or insert mode 
+let &t_SI = "\e[6 q" "insert mode steady bar
+let &t_EI = "\e[2 q" "normal mode steady block
+
 " When started as "evim", evim.vim will already have done these settings, bail
 " out.
 if v:progname =~? "evim"
@@ -254,10 +258,12 @@ set foldlevel=99
 " Enable folding with the spacebar
 " nnoremap <space> za
 
-" Using UTF-8 enconding
+" Using UTF-8 encoding
 set encoding=utf-8
 
 " Some key mapping
+nmap <leader>s :set spell<CR>
+nmap <leader>ns :set nospell<CR>
 nmap <leader>h :noh<CR>
 nmap <leader>l :lopen<CR>
 nmap <leader>c :lclose<CR>
