@@ -10,8 +10,11 @@
 "	      for Haiku:  ~/config/settings/vim/vimrc
 "	    for OpenVMS:  sys$login:.vimrc
 
-" set the leader key
+" set leader key to space bar
 let mapleader=" "
+
+" Get the defaults that most users want.
+source $VIMRUNTIME/defaults.vim
 
 """""""""""""""""""""""""""
 " vim-plug plugin manager "
@@ -90,8 +93,10 @@ Plug 'chrisbra/unicode.vim'
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()            " required
 " You can revert the settings after the call like so:
-"   filetype indent off   " Disable file-type-specific indentation
+   filetype indent off   " Disable file-type-specific indentation
 "   syntax off            " Disable syntax highlighting
+" To turn on selectively on some file type:
+" autocmd BufRead,BufNewFile *.py filetype indent on
 
 
 """"""""""""""""""""
@@ -102,9 +107,6 @@ call plug#end()            " required
 if v:progname =~? "evim"
   finish
 endif
-
-" Get the defaults that most users want.
-source $VIMRUNTIME/defaults.vim
 
 if has("vms")
   set nobackup		" do not keep a backup file, use versions instead
@@ -214,11 +216,14 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 
   " 2 whitespace indent for vhdl souce file
-  au BufNewFile,BufRead *.md,*.Rmd,*.vhd
+  au BufNewFile,BufRead *.md,*.Rmd
       \ set tabstop=2 |
       \ set softtabstop=2 |
       \ set shiftwidth=2 |
-      \ set expandtab
+      \ set smartindent |
+      \ set copyindent |
+      \ set expandtab 
+
 
   " Flag unnecessary whitespace
   au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
@@ -240,17 +245,16 @@ endif
 
 " turn on line numbers for all files
 set number
+set relativenumber
 
 " Enable folding
 set foldmethod=indent
 set foldlevel=99
 
 " Enable folding with the spacebar
-"nnoremap <space> za
+" nnoremap <space> za
 
 " Using UTF-8 enconding
-set encoding=utf-8
-lclose
 " Some key mapping
 nmap <leader>h :noh<CR>
 nmap <leader>l :lopen<CR>
