@@ -255,6 +255,9 @@ set relativenumber
 set foldmethod=indent
 set foldlevel=99
 
+" Enable switching buffer without save the current change 
+set hidden
+
 " Enable folding with the spacebar
 " nnoremap <space> za
 
