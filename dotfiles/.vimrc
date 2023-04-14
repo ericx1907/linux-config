@@ -265,11 +265,12 @@ set hidden
 set encoding=utf-8
 
 " Some key mapping
-nmap <leader>s :set spell<CR>
+nmap <leader>sp :set spell<CR>
 nmap <leader>ns :set nospell<CR>
 nmap <leader>h :noh<CR>
 nmap <leader>l :lopen<CR>
 nmap <leader>c :lclose<CR>
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 
 " python with virtualenv support
 py3 << EOF
