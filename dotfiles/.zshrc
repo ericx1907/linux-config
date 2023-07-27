@@ -68,12 +68,12 @@ HIST_STAMPS="mm/dd/yyyy"
 ################
 # fzf settings #
 ################
-# Tells fzf plugin the base directory 
-export FZF_BASE=/home/ericx/.fzf
+# Tells fzf plugin the base directory
+export FZF_BASE=${HOME}/.fzf
 
 #make fzf(fuzzy finder/filter) to use fdfind by default instead of find
 #it follows symbolic links and includes hidden files (but exclude .git folders)
-export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git' 
+export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
 #if using fd's colored output inside fzf, add --ansi in the option and --color=always in the above command
 export FZF_DEFAULT_OPTS="--ansi --height=60% --layout=reverse --info=inline --border"
 
@@ -100,22 +100,32 @@ _fzf_compgen_dir() {
 export FZF_CTRL_T_COMMAND="fd --hidden --follow --exclude .git"
 export FZF_ALT_C_COMMAND="fd -t d --hidden --follow --exclude .git"
 export FZF_ALT_C_OPTS="--height=60% --preview 'tree -C {} | head -200'"
- 
+
 # Which plugins would you like to load?
 # Standard plugins can be found in $ZSH/plugins/
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git fzf)
+plugins=(vi-mode git fzf)
 
 source $ZSH/oh-my-zsh.sh
 
 ######################
 # User configuration #
-###################### 
-# Some helper on completion
-setopt nomatch 
-setopt notify 
+######################
+###########
+# vi-mode #
+###########
+MODE_INDICATOR="%F{white}%B>%b%f"
+INSERT_MODE_INDICATOR="%F{yellow}%B<%b%f" 
+VI_MODE_SET_CURSOR=true
+VI_MODE_CURSOR_NORMAL=2 # solid block
+VI_MODE_CURSOR_VISUAL=1 # blinking block
+VI_MODE_CURSOR_INSERT=6 # solid line
+
+# Some options that help on completion
+setopt nomatch
+setopt notify
 
 # Add xvhdl to path vairable so vim can use it
 [ -s /tools/Xilinx/Vivado/2022.1/bin/xvhdl ] && PATH="/tools/Xilinx/Vivado/2022.1/bin:$PATH"
