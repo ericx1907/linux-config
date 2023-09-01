@@ -8,7 +8,8 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster_eric"
+ZSH_THEME="agnoster" 
+DEFAULT_USER="eric"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -106,7 +107,7 @@ export FZF_ALT_C_OPTS="--height=60% --preview 'tree -C {} | head -200'"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git fzf)
+plugins=(vi-mode git fzf aliases)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -117,7 +118,7 @@ source $ZSH/oh-my-zsh.sh
 # vi-mode #
 ###########
 MODE_INDICATOR="%F{white}%B>%b%f"
-INSERT_MODE_INDICATOR="%F{yellow}%B<%b%f" 
+INSERT_MODE_INDICATOR="%F{yellow}%B<%b%f"
 VI_MODE_SET_CURSOR=true
 VI_MODE_CURSOR_NORMAL=2 # solid block
 VI_MODE_CURSOR_VISUAL=1 # blinking block
