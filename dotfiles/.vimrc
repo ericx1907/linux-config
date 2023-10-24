@@ -102,7 +102,7 @@ call plug#end()            " required
 """"""""""""""""""""
 " General Settings "
 """"""""""""""""""""
-" Set different cursor shape in normal or insert mode 
+" Set different cursor shape in normal or insert mode
 let &t_SI = "\e[6 q" "insert mode steady bar
 let &t_EI = "\e[2 q" "normal mode steady block
 
@@ -220,14 +220,16 @@ augroup vimrcEx
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 
   " 2 whitespace indent for vhdl souce file
-  au BufNewFile,BufRead *.md,*.Rmd,*.vhd
-      \ set tabstop=2 |
-      \ set softtabstop=2 |
-      \ set shiftwidth=2 |
-      \ set expandtab |
-      \ set smartindent |
-      \ set copyindent 
+    "\ let g:vhdl_indent_genportmap = 0 |
+    "\ filetype indent on |
+  au BufNewFile,BufRead *.vhd
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+    \ set expandtab |
+    \ set fileformat=unix
 
+  au BufNewFile,BufRead *.vhd filetype indent on
 
   " Flag unnecessary whitespace
   au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
@@ -255,7 +257,7 @@ set relativenumber
 set foldmethod=indent
 set foldlevel=99
 
-" Enable switching buffer without save the current change 
+" Enable switching buffer without save the current change
 set hidden
 
 " Enable folding with the spacebar
