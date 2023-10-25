@@ -90,17 +90,44 @@ Plug 'chrisbra/unicode.vim'
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()            " required
 " You can revert the settings after the call like so:
-   filetype indent off   " Disable file-type-specific indentation
+"   filetype indent off   " Disable file-type-specific indentation
 "   syntax off            " Disable syntax highlighting
 " To turn on selectively on some file type:
 " autocmd BufRead,BufNewFile *.py filetype indent on
 
+""""""""""""""""""""
+" User Key Mapping "
+""""""""""""""""""""
+nnoremap <leader>sp :set spell<CR>
+nnoremap <leader>ns :set nospell<CR>
+nnoremap <leader>h :noh<CR>
+nnoremap <leader>l :lopen<CR>
+nnoremap <leader>c :lclose<CR>
+nnoremap <leader>s :%s/\<<C-r><C-w>\>/
+" move selected lines up one line
+xnoremap <S-k> :m-2<CR>gv=gv
+" move selected lines down one line
+xnoremap <S-j> :m'>+<CR>gv=gv
 
 """"""""""""""""""""
 " General Settings "
 """"""""""""""""""""
-" Set the BadWhitesapce highlightgroup
-" highlight BadWhitespace ctermfg=88 guibg=darkred
+" turn on relative line numbers for all files
+set number
+set relativenumber
+
+" Enable folding
+set foldmethod=indent
+set foldlevel=99
+
+" Enable switching buffer without save the current change
+set hidden
+
+" Enable folding with the spacebar
+" nnoremap <space> za
+
+" Using UTF-8 encoding
+set encoding=utf-8
 
 " Set different cursor shape in normal or insert mode
 let &t_SI = "\e[6 q" "insert mode steady bar
@@ -226,8 +253,6 @@ augroup vimrcEx
   " 2 whitespace indent for vhdl souce file
   au BufRead,BufNewFile *.vhd
     \ let g:vhdl_indent_genportmap = 0 |
-    \ filetype indent on |
-    \ source $VIMRUNTIME/indent/vhdl.vim |
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2 |
@@ -254,30 +279,6 @@ if has('syntax') && has('eval')
   packadd! matchit
 endif
 
-" turn on line numbers for all files
-set number
-set relativenumber
-
-" Enable folding
-set foldmethod=indent
-set foldlevel=99
-
-" Enable switching buffer without save the current change
-set hidden
-
-" Enable folding with the spacebar
-" nnoremap <space> za
-
-" Using UTF-8 encoding
-set encoding=utf-8
-
-" Some key mapping
-nmap <leader>sp :set spell<CR>
-nmap <leader>ns :set nospell<CR>
-nmap <leader>h :noh<CR>
-nmap <leader>l :lopen<CR>
-nmap <leader>c :lclose<CR>
-nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 
 " python with virtualenv support
 py3 << EOF
