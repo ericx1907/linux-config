@@ -31,9 +31,6 @@ call plug#begin()
 " Make sure you use single quotes
 
 
-" better handle auto-indentation in python
-Plug 'vim-scripts/indentpython.vim'
-
 " Auto completion engine for various language (c-family, python3, java, rust, etc)
 Plug 'ycm-core/YouCompleteMe'
 let g:ycm_autoclose_preview_window_after_completion=1
@@ -102,6 +99,9 @@ call plug#end()            " required
 """"""""""""""""""""
 " General Settings "
 """"""""""""""""""""
+" Set the BadWhitesapce highlightgroup
+" highlight BadWhitespace ctermfg=88 guibg=darkred
+
 " Set different cursor shape in normal or insert mode
 let &t_SI = "\e[6 q" "insert mode steady bar
 let &t_EI = "\e[2 q" "normal mode steady block
@@ -208,31 +208,36 @@ augroup vimrcEx
   autocmd StdinReadPre * let s:std_in=1
   " If using Ubuntu terminal change the size, changing size in windows
   " terminal will cause errors
-  autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+  "autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
   "remove the setting for terminal size as in wsl ubuntu
   "autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
 
   " Exit Vim if NERDTree is the only window remaining in the only tab.
-  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
+  "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
   "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
   " enable python syntax highlighting
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 
+  au BufRead,BufNewFile * filetype indent off
+
+  "au FileType vhdl filetype indent on
+
   " 2 whitespace indent for vhdl souce file
-    "\ let g:vhdl_indent_genportmap = 0 |
-    "\ filetype indent on |
-  au BufNewFile,BufRead *.vhd
+  au BufRead,BufNewFile *.vhd
+    \ let g:vhdl_indent_genportmap = 0 |
+    \ filetype indent on |
+    \ source $VIMRUNTIME/indent/vhdl.vim |
     \ set tabstop=2 |
     \ set softtabstop=2 |
     \ set shiftwidth=2 |
     \ set expandtab |
     \ set fileformat=unix
 
-  au BufNewFile,BufRead *.vhd filetype indent on
-
   " Flag unnecessary whitespace
-  au BufRead,BufNewFile *.py,*.pyw,*.c,*.h match BadWhitespace /\s\+$/
+  au BufRead,BufNewFile *.py
+    \ hi BadWhitespace ctermbg=88 |
+    \ match BadWhitespace /\s\+$/
 
   au VimLeave * if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif
 
