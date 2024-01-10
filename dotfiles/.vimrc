@@ -234,19 +234,19 @@ augroup vimrcEx
   " Start NERDTree. If a file is specified, move the cursor to its window.
   autocmd StdinReadPre * let s:std_in=1
   " If using Ubuntu terminal change the size, changing size in windows
-  " terminal will cause errors
-  "autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+  "+terminal will cause errors
+  autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
   "remove the setting for terminal size as in wsl ubuntu
   "autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
 
   " Exit Vim if NERDTree is the only window remaining in the only tab.
-  "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
+  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
   "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
   " enable python syntax highlighting
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 
-  au BufRead,BufNewFile * filetype indent off
+  "au BufRead,BufNewFile * filetype indent off
 
   "au FileType vhdl filetype indent on
 
