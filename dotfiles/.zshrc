@@ -70,7 +70,7 @@ HIST_STAMPS="mm/dd/yyyy"
 # fzf settings #
 ################
 # Tells fzf plugin the base directory
-export FZF_BASE=${HOME}/.fzf
+[ -s ${HOME}/.vim/plugged/fzf/bin/fzf ] && export FZF_BASE=${HOME}/.vim/plugged/fzf
 
 #make fzf(fuzzy finder/filter) to use fdfind by default instead of find
 #it follows symbolic links and includes hidden files (but exclude .git folders)
@@ -99,6 +99,10 @@ _fzf_compgen_dir() {
 
 #fzf ctrl-t and alt-c behavior
 export FZF_CTRL_T_COMMAND="fd --hidden --follow --exclude .git"
+# Preview file content using bat (https://github.com/sharkdp/bat)
+export FZF_CTRL_T_OPTS="
+  --preview 'bat -n --color=always {}'
+  --bind 'ctrl-/:change-preview-window(down|hidden|)'"
 export FZF_ALT_C_COMMAND="fd -t d --hidden --follow --exclude .git"
 export FZF_ALT_C_OPTS="--height=60% --preview 'tree -C {} | head -200'"
 
