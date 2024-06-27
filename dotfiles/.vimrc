@@ -45,10 +45,16 @@ let g:ycm_language_server = [
   \   {
   \	'name': 'vim',
   \     'filetypes': [ 'vim' ],
-  \     'cmdline':[ 'vim-language-server' , '--stdio' ]
+  \     'cmdline': [ 'vim-language-server' , '--stdio' ]
   \   },
   \ ]
+"  \   {
+"  \	'name': 'hdl_checker',
+"  \     'filetypes': [ 'vhdl', 'verilog', 'systemverilog' ],
+"  \     'cmdline': [ 'hdl_checker' , '--lsp' ]
+"  \   }
 let g:ycm_error_symbol = '!!'
+let g:ycm_max_diagnostics_to_display = 0
 
 " Add syntax check
 Plug 'dense-analysis/ale'
@@ -56,11 +62,10 @@ Plug 'dense-analysis/ale'
 let g:ale_linters_explicit = 1
 " Disable ALE's own LSP functionality beacuse using YCM
 let g:ale_disable_lsp = 1
-" In ~/.vim/vimrc, or somewhere similar.
 let g:ale_linters = {
   \ 'javascript': ['eslint'],
-  \ 'vhdl'      : ['xvhdl'],
-  \}
+  \ 'vhdl'      : ['hdl_checker', 'xvhdl'], 
+  \ }
 
 " Add PEP 8 checking for python
 Plug 'nvie/vim-flake8'
@@ -73,7 +78,7 @@ Plug 'preservim/nerdtree'
 let NERDTreeShowHidden=1
 
 " fuzzy finder
-Plug 'junegunn/fzf'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 
 " Airline statusbar and theme
@@ -315,7 +320,7 @@ set completeopt=popup,menuone
 """"""""""""""""""
 " This command is similar to the original Rg but allow user to specify additional options to ripgrep
 " before the match expression
-command! -bang -nargs=* RG
-      \ call fzf#vim#grep(
-      \   'rg --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
-      \   fzf#vim#with_preview(), <bang>0)
+"command! -bang -nargs=* RG
+"      \ call fzf#vim#grep(
+"      \   'rg --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
+"      \   fzf#vim#with_preview(), <bang>0)
