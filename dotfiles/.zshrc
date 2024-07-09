@@ -9,7 +9,7 @@ export ZSH="$HOME/.oh-my-zsh"
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 ZSH_THEME="agnoster"
-DEFAULT_USER="eric"
+DEFAULT_USER="ericx"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -66,12 +66,25 @@ HIST_STAMPS="mm/dd/yyyy"
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
 
-################
-# fzf settings #
-################
 # Tells fzf plugin the base directory
 [ -s ${HOME}/.vim/plugged/fzf/bin/fzf ] && export FZF_BASE=${HOME}/.vim/plugged/fzf
 
+# Which plugins would you like to load?
+# Standard plugins can be found in $ZSH/plugins/
+# Custom plugins may be added to $ZSH_CUSTOM/plugins/
+# Example format: plugins=(rails git textmate ruby lighthouse)
+# Add wisely, as too many plugins slow down shell startup.
+plugins=(vi-mode git fzf aliases)
+
+source $ZSH/oh-my-zsh.sh
+
+##################################
+# User configuration starts here #
+##################################
+
+################
+# fzf settings #
+################
 #make fzf(fuzzy finder/filter) to use fdfind by default instead of find
 #it follows symbolic links and includes hidden files (but exclude .git folders)
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
@@ -106,21 +119,9 @@ export FZF_CTRL_T_OPTS="
 export FZF_ALT_C_COMMAND="fd -t d --hidden --follow --exclude .git"
 export FZF_ALT_C_OPTS="--height=60% --preview 'tree -C {} | head -200'"
 
-# Which plugins would you like to load?
-# Standard plugins can be found in $ZSH/plugins/
-# Custom plugins may be added to $ZSH_CUSTOM/plugins/
-# Example format: plugins=(rails git textmate ruby lighthouse)
-# Add wisely, as too many plugins slow down shell startup.
-plugins=(vi-mode git fzf aliases)
-
-source $ZSH/oh-my-zsh.sh
-
-######################
-# User configuration #
-######################
-###########
-# vi-mode #
-###########
+#############################
+# vi-mode addition settings #
+#############################
 MODE_INDICATOR="%F{white}%B>%b%f"
 INSERT_MODE_INDICATOR="%F{yellow}%B<%b%f"
 VI_MODE_SET_CURSOR=true
@@ -128,29 +129,34 @@ VI_MODE_CURSOR_NORMAL=2 # solid block
 VI_MODE_CURSOR_VISUAL=1 # blinking block
 VI_MODE_CURSOR_INSERT=6 # solid line
 
-# Some options that help on completion
+#######################
+# set Z shell options #
+#######################
 setopt nomatch
 setopt notify
 
+################
+# Xilinx tools #
+################
 # Add xvhdl to path vairable so vim can use it
 [ -s /tools/Xilinx/Vivado/2022.1/bin/xvhdl ] && PATH="/tools/Xilinx/Vivado/2022.1/bin:$PATH"
 
-# add fd(fd-find) to the executable path
-export PATH=$HOME/.local/bin:$PATH
-
-# nvm settings
+################
+# NVM settings #
+################
 export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
 
-# Required by gnupg on headless system such as wsl2
-export GPG_TTY=$(tty)
-
+#########
+# Alias #
+#########
 # Define new or redefine alias by oh-my-zsh
 alias l='ls -CF'
 alias la='ls -aCF'
 alias lla='ls -alFh'
 alias ll='ls -lFh'
+
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
@@ -175,6 +181,12 @@ alias ll='ls -lFh'
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
+########
+# MISC #
+########
+# add fd(fd-find) to the executable path
+export PATH=$HOME/.local/bin:$PATH
+
 # Test if we are running MS WSL Linux or native Linux
 # If the formmer is true then the terminal is controlled by windows terminal
 if grep -qi microsoft /proc/version; then
@@ -182,3 +194,9 @@ if grep -qi microsoft /proc/version; then
 else
   export TERM_UBUNTU=1
 fi
+
+# Required by gnupg on headless system such as wsl2
+export GPG_TTY=$(tty)
+
+# Do not use less if content fits one screen, ANSI color escape sequences will handled
+export LESS="-FR"

@@ -203,3 +203,6 @@ if grep -qi microsoft /proc/version; then
 else
   export TERM_UBUNTU=1
 fi
+
+# tell less to exit if context is less than one screen and display ANSI color escape sequences
+LESS="-RF"
