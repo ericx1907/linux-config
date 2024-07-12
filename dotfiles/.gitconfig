@@ -1,0 +1,12 @@
+[credential]
+	helper = /usr/local/bin/git-credential-manager
+	credentialStore = gpg
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[user]
+	name = chengx
+	email = chengx@morgan-aps.com
+[core]
+	editor = vim
+[init]
+	defaultBranch = main
