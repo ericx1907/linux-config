@@ -1,0 +1,12 @@
+[core]
+	editor = vim
+[credential]
+	helper = /mnt/c/Program\\ Files/Git/mingw64/bin/git-credential-manager.exe
+	credentialStore = wincredman
+[credential "https://dev.azure.com"]
+	useHttpPath = true
+[user]
+	name = chengx
+	email = chengx@morgan-aps.com
+[init]
+	defaultBranch = main
