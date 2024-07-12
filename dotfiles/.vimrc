@@ -113,10 +113,18 @@ nnoremap <leader>s :%s/\<<C-r><C-w>\>/
 xnoremap <S-k> :m-2<CR>gv=gv
 " move selected lines down one line
 xnoremap <S-j> :m'>+<CR>gv=gv
+" copy selected objects using ctrl+c
+"vnoremap <C-c> <Esc>`>a<CR><Esc>`<i<CR><Esc>vg_:w !xclip -i -selection c<CR><CR>kJJ
+vnoremap <silent><C-c> "zy
+\:call writefile(getreg('z', 1, 1), $HOME."/.vim/vim_clipboard")<CR>
+\:call system("xclip -r -sel c $HOME/.vim/vim_clipboard")<CR>
 
 """"""""""""""""""""
 " General Settings "
 """"""""""""""""""""
+" specify how vim formats text
+"set formatoptions=tcql
+
 " turn on relative line numbers for all files
 set number
 set relativenumber
@@ -320,7 +328,7 @@ set completeopt=popup,menuone
 """"""""""""""""""
 " This command is similar to the original Rg but allow user to specify additional options to ripgrep
 " before the match expression
-"command! -bang -nargs=* RG
-"      \ call fzf#vim#grep(
-"      \   'rg --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
-"      \   fzf#vim#with_preview(), <bang>0)
+command! -bang -nargs=* RG
+      \ call fzf#vim#grep(
+      \   'rg --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
+      \   fzf#vim#with_preview(), <bang>0)
