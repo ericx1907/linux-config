@@ -8,8 +8,9 @@ export ZSH="$HOME/.oh-my-zsh"
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-ZSH_THEME="agnoster"
-DEFAULT_USER="ericx"
+# ZSH_THEME="agnoster"
+ZSH_THEME="agkozak"
+# DEFAULT_USER="ericx"
 
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
@@ -79,14 +80,30 @@ plugins=(vi-mode git fzf aliases)
 source $ZSH/oh-my-zsh.sh
 
 ##################################
-# User configuration starts here #
+# User customization starts here #
 ##################################
+
+###########################
+# agkozak prompt settings #
+###########################
+AGKOZAK_BLANK_LINES=0
+AGKOZAK_LEFT_PROMPT_ONLY=1
+AGKOZAK_PROMPT_CHAR=( '%F{116}❯%f' '%F{116}❯%f' '%F{245}❮%f' )
+AGKOZAK_CUSTOM_SYMBOLS=( '⇣⇡' '⇣' '⇡' '+' 'x' '!' '>' '?' 'S')
+
+AGKOZAK_COLORS_USER_HOST=108
+#AGKOZAK_COLORS_PATH=116
+AGKOZAK_COLORS_BRANCH_STATUS=228
+AGKOZAK_COLORS_EXIT_STATUS=174
+AGKOZAK_COLORS_CMD_EXEC_TIME=245
+#AGKOZAK_COLORS_VIRTUALENV=188
+AGKOZAK_COLORS_BG_STRING=223
 
 ################
 # fzf settings #
 ################
-#make fzf(fuzzy finder/filter) to use fdfind by default instead of find
-#it follows symbolic links and includes hidden files (but exclude .git folders)
+# make fzf(fuzzy finder/filter) to use fdfind by default instead of find
+# it follows symbolic links and includes hidden files (but exclude .git folders)
 export FZF_DEFAULT_COMMAND='fd --type file --follow --hidden --exclude .git'
 #if using fd's colored output inside fzf, add --ansi in the option and --color=always in the above command
 export FZF_DEFAULT_OPTS="--ansi --height=60% --layout=reverse --info=inline --border"
