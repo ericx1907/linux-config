@@ -64,7 +64,7 @@ let g:ale_linters_explicit = 1
 let g:ale_disable_lsp = 1
 let g:ale_linters = {
   \ 'javascript': ['eslint'],
-  \ 'vhdl'      : ['hdl_checker', 'xvhdl'], 
+  \ 'vhdl'      : ['hdl_checker', 'xvhdl'],
   \ }
 
 " Add PEP 8 checking for python
@@ -90,6 +90,9 @@ Plug 'tpope/vim-fugitive'
 
 " unicode support
 Plug 'chrisbra/unicode.vim'
+
+" text filtering and alignment
+Plug 'godlygeek/tabular'
 
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
@@ -246,15 +249,16 @@ augroup vimrcEx
 
   " Start NERDTree. If a file is specified, move the cursor to its window.
   autocmd StdinReadPre * let s:std_in=1
-  " If using Ubuntu terminal change the size, changing size in windows
-  "+terminal will cause errors
-  autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-  "remove the setting for terminal size as in wsl ubuntu
-  "autocmd VimEnter * NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+  autocmd VimEnter * if !exists('b:NERDTree') | NERDTree | endif | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+
+  " If using Ubuntu terminal change the size, do not change size in windows
+  "+terminal
+  "autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
+
 
   " Exit Vim if NERDTree is the only window remaining in the only tab.
-  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
-  "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
+  "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
+  autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | quit | endif
 
   " enable python syntax highlighting
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
@@ -277,7 +281,7 @@ augroup vimrcEx
     \ hi BadWhitespace ctermbg=88 |
     \ match BadWhitespace /\s\+$/
 
-  au VimLeave * if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif
+  "au VimLeave * if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif
 
   au VimEnter * call AirlineInit()
 augroup END
@@ -328,7 +332,9 @@ set completeopt=popup,menuone
 """"""""""""""""""
 " This command is similar to the original Rg but allow user to specify additional options to ripgrep
 " before the match expression
-command! -bang -nargs=* RG
+command! -bang -nargs=* Rgx
       \ call fzf#vim#grep(
       \   'rg --column --line-number --no-heading --color=always --smart-case '.<q-args>, 1,
       \   fzf#vim#with_preview(), <bang>0)
+
+hi Terminal ctermbg=237 ctermfg=188
