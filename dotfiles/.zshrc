@@ -86,17 +86,17 @@ source $ZSH/oh-my-zsh.sh
 ###########################
 # agkozak prompt settings #
 ###########################
-AGKOZAK_BLANK_LINES=0
+AGKOZAK_BLANK_LINES=1
 AGKOZAK_LEFT_PROMPT_ONLY=1
 AGKOZAK_PROMPT_CHAR=( '%F{116}❯%f' '%F{116}❯%f' '%F{245}❮%f' )
 AGKOZAK_CUSTOM_SYMBOLS=( '⇣⇡' '⇣' '⇡' '+' 'x' '!' '>' '?' 'S')
 
 AGKOZAK_COLORS_USER_HOST=108
-#AGKOZAK_COLORS_PATH=116
+AGKOZAK_COLORS_PATH=116
 AGKOZAK_COLORS_BRANCH_STATUS=228
 AGKOZAK_COLORS_EXIT_STATUS=174
 AGKOZAK_COLORS_CMD_EXEC_TIME=245
-#AGKOZAK_COLORS_VIRTUALENV=188
+AGKOZAK_COLORS_VIRTUALENV=188
 AGKOZAK_COLORS_BG_STRING=223
 
 ################
@@ -157,6 +157,7 @@ setopt notify
 ################
 # Add xvhdl to path vairable so vim can use it
 [ -s /tools/Xilinx/Vivado/2022.1/bin/xvhdl ] && PATH="/tools/Xilinx/Vivado/2022.1/bin:$PATH"
+export TRAINING_PATH="$HOME/training"
 
 ################
 # NVM settings #
