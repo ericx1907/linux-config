@@ -14,8 +14,6 @@
 
     - [tutorial](https://www.rexegg.com/regex-quantifiers.html#greedy)
 
-* Replace vundle with vim-plug in .vimrc
-
 * Continue test LSP using YouCompleteMe
 
 * Find a good LSP client for vim, possible candidate: [coc.nvim](https://github.com/neoclide/coc.nvim)
