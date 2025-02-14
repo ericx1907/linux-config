@@ -94,6 +94,9 @@ Plug 'chrisbra/unicode.vim'
 " text filtering and alignment
 Plug 'godlygeek/tabular'
 
+" diffs on blocks of code/text
+Plug 'AndrewRadev/linediff.vim'
+
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
 call plug#end()            " required
@@ -122,14 +125,38 @@ vnoremap <silent><C-c> "zy
 \:call writefile(getreg('z', 1, 1), $HOME."/.vim/vim_clipboard")<CR>
 \:call system("xclip -r -sel c $HOME/.vim/vim_clipboard")<CR>
 
-""""""""""""""""""""
-" General Settings "
-""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""
+"********** General Settings **********"
+""""""""""""""""""""""""""""""""""""""""
+" Color and Highlight "
+" use more precise color
+if has("termguicolors")
+  set termguicolors
+endif
+
+" Load color scheme based which mode vim is running in
+colorscheme zenburn
+
+" highlight current line
+set cursorline
+highlight Cursorline ctermbg=238
+
+" Keep text selected original color
+highlight Visual ctermfg=NONE guifg=NONE
+
+"show extrx info about completion candiate in popup window
+set completeopt=popup,menuone
+
+" Enable mouse support
+set mouse=a
+
+" Always enable statuslien for any window
+set laststatus=2
+
 " specify how vim formats text
 "set formatoptions=tcql
 
 " turn on relative line numbers for all files
-set number
 set relativenumber
 
 " Enable folding
@@ -149,59 +176,31 @@ set encoding=utf-8
 let &t_SI = "\e[6 q" "insert mode steady bar
 let &t_EI = "\e[2 q" "normal mode steady block
 
-" When started as "evim", evim.vim will already have done these settings, bail
-" out.
+" When started as "evim", evim.vim will already have done these settings, bail out.
 if v:progname =~? "evim"
   finish
 endif
 
-if has("vms")
-  set nobackup		" do not keep a backup file, use versions instead
-else
-  set backup		" keep a backup file (restore to previous version)
-  set backupdir=~/.vim/tmp/
-  set dir=~/.vim/tmp " set the directory for swap files
-  "if has('persistent_undo')
-  "  set undofile	" keep an undo file (undo changes after closing)
-  "endif
-endif
+" keep a backup file (restore to previous version)
+set backup
+set backupdir=~/.vim/tmp/
+set dir=~/.vim/tmp/swap/ " set the directory for swap files
+"if has('persistent_undo')
+"  set undofile	 " undo changes after closing
+"endif
 
+" Switch on highlighting the last used search pattern.
 if &t_Co > 2 || has("gui_running")
-  " Switch on highlighting the last used search pattern.
   set hlsearch
 endif
 
 " Initilize vim ariline status bar
 function! AirlineInit()
-  let g:airline#extensions#branch#enabled = 1
- " let g:airline_section_b = airline#section#create_left(['hunks'])
-  let g:airline_powerline_fonts = 1
+  "let g:airline_powerline_fonts = 1
 
   if !exists('g:airline_symbols')
     let g:airline_symbols = {}
   endif
-
-  " unicode symbols
-  let g:airline_left_sep = '»'
-  let g:airline_left_sep = '▶'
-  let g:airline_right_sep = '«'
-  let g:airline_right_sep = '◀'
-  let g:airline_symbols.colnr = ' ㏇:'
-  let g:airline_symbols.colnr = ' ℅:'
-  let g:airline_symbols.crypt = '🔒'
-  let g:airline_symbols.linenr = '☰'
-  let g:airline_symbols.linenr = ' ␊:'
-  let g:airline_symbols.linenr = ' ␤:'
-  let g:airline_symbols.linenr = '¶'
-  let g:airline_symbols.maxlinenr = ''
-  let g:airline_symbols.maxlinenr = '㏑'
-  let g:airline_symbols.branch = '⎇'
-  let g:airline_symbols.paste = 'ρ'
-  let g:airline_symbols.paste = 'Þ'
-  let g:airline_symbols.paste = '∥'
-  let g:airline_symbols.spell = 'Ꞩ'
-  let g:airline_symbols.notexists = 'Ɇ'
-  let g:airline_symbols.whitespace = 'Ξ'
 
   " powerline symbols
   let g:airline_left_sep = ""
@@ -212,15 +211,20 @@ function! AirlineInit()
   let g:airline_symbols.colnr = ' ℅:'
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ' :'
-  let g:airline_symbols.maxlinenr = '☰ '
-  let g:airline_symbols.dirty='⚡'
+  let g:airline_symbols.maxlinenr = '☰'
+  let g:airline_symbols.whitespace = '⌷'
+  let g:airline_symbols.dirty = '⚡'
+  let g:airline_theme = 'zenburn'
 
-  let g:airline_theme='zenburn'
+  let g:airline_section_z = '%p%% %l:%v'
 
   let g:airline#extensions#ale#enabled = 1
   let g:airline#extensions#fzf#enabled = 1
   let g:airline#extensions#ycm#enabled = 1
+  let g:airline#extensions#wordcount#enabled = 1
 endfunction
+
+call AirlineInit()
 
 augroup MyYCMCustom
   autocmd!
@@ -263,7 +267,7 @@ augroup vimrcEx
   " enable python syntax highlighting
   autocmd BufRead,BufNewFile *.py let python_highlight_all=1
 
-  "au BufRead,BufNewFile * filetype indent off
+  au BufRead,BufNewFile * filetype indent off
 
   "au FileType vhdl filetype indent on
 
@@ -283,7 +287,6 @@ augroup vimrcEx
 
   "au VimLeave * if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif
 
-  au VimEnter * call AirlineInit()
 augroup END
 
 " Add optional packages.
@@ -295,37 +298,6 @@ augroup END
 if has('syntax') && has('eval')
   packadd! matchit
 endif
-
-
-" python with virtualenv support
-py3 << EOF
-import os
-import sys
-if 'VIRTUAL_ENV' in os.environ:
-  project_base_dir = os.environ['VIRTUAL_ENV']
-  activate_this = os.path.join(project_base_dir, 'bin/activate_this.py')
-  execfile(activate_this, dict(__file__=activate_this))
-EOF
-
-" Load color scheme based which mode vim is running in
-if has('gui_running')
-  set background=dark
-  colorscheme solarized
-else
-  colorscheme zenburn
-endif
-
-set laststatus=2
-
-" Enable mouse support
-set mouse=a
-
-" highlight current line
-set cursorline
-:highlight Cursorline ctermbg=238
-
-"show extrx info about completion candiate in popup window
-set completeopt=popup,menuone
 
 """"""""""""""""""
 " Custom Command "
