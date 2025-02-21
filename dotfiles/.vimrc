@@ -53,7 +53,8 @@ let g:ycm_language_server = [
 "  \     'filetypes': [ 'vhdl', 'verilog', 'systemverilog' ],
 "  \     'cmdline': [ 'hdl_checker' , '--lsp' ]
 "  \   }
-let g:ycm_error_symbol = '!!'
+let g:ycm_error_symbol = 'E'
+let g:ycm_warning_symbol = 'W'
 let g:ycm_max_diagnostics_to_display = 0
 
 " Add syntax check
@@ -114,9 +115,10 @@ nnoremap <leader>ns :set nospell<CR>
 nnoremap <leader>h :noh<CR>
 nnoremap <leader>l :lopen<CR>
 nnoremap <leader>c :lclose<CR>
-nnoremap <leader>s :%s/\<<C-r><C-w>\>/
+nnoremap <leader>r :%s/\<<C-r><C-w>\>/
+nnoremap <leader>t :NERDTreeToggle<CR>
 " move selected lines up one line
-xnoremap <S-k> :m-2<CR>gv=gv
+xn%s/\<<C-r><C-w>\>/oremap <S-k> :m-2<CR>gv=gv
 " move selected lines down one line
 xnoremap <S-j> :m'>+<CR>gv=gv
 " copy selected objects using ctrl+c
@@ -134,8 +136,12 @@ if has("termguicolors")
   set termguicolors
 endif
 
-" Load color scheme based which mode vim is running in
-colorscheme zenburn
+" Load nice color scheme if it is installed
+if !empty(globpath(&rtp, "colors/zenburn.vim"))
+  colorscheme zenburn
+else
+  colorscheme default
+endif
 
 " highlight current line
 set cursorline
@@ -143,6 +149,9 @@ highlight Cursorline ctermbg=238
 
 " Keep text selected original color
 highlight Visual ctermfg=NONE guifg=NONE
+" Keep background color of Line number column same as gutter
+highlight LineNr guibg=#343434
+highlight CursorLineNr guibg=#343434
 
 "show extrx info about completion candiate in popup window
 set completeopt=popup,menuone
@@ -157,6 +166,7 @@ set laststatus=2
 "set formatoptions=tcql
 
 " turn on relative line numbers for all files
+set number
 set relativenumber
 
 " Enable folding
