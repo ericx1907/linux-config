@@ -145,7 +145,7 @@ endif
 
 " highlight current line
 set cursorline
-highlight Cursorline ctermbg=238
+highlight CursorLine ctermbg=238
 
 " Keep text selected original color
 highlight Visual ctermfg=NONE guifg=NONE
