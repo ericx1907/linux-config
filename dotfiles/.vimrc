@@ -56,6 +56,7 @@ let g:ycm_language_server = [
 let g:ycm_error_symbol = 'E'
 let g:ycm_warning_symbol = 'W'
 let g:ycm_max_diagnostics_to_display = 0
+let g:ycm_echo_current_diagnostic = 1
 
 " Add syntax check
 Plug 'dense-analysis/ale'
