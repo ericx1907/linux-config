@@ -155,8 +155,8 @@ setopt notify
 ################
 # Xilinx tools #
 ################
-# Add xvhdl to path vairable so vim can use it
-[ -s /tools/Xilinx/Vivado/2022.1/bin/xvhdl ] && PATH="/tools/Xilinx/Vivado/2022.1/bin:$PATH"
+# Add xilinx tools to path vairable so vim can use it
+[ -f /tools/Xilinx/Vitis/2024.2/settings64.sh ] && source /tools/Xilinx/Vitis/2024.2/settings64.sh 1>/dev/null
 export TRAINING_PATH="$HOME/training"
 
 ################
