@@ -72,7 +72,7 @@ let g:ale_linters = {
 " Add PEP 8 checking for python
 Plug 'nvie/vim-flake8'
 
-" trying out some color scheme
+" The only color scheme that is friendly to my eyes
 Plug 'jnurmine/Zenburn'
 
 " file system explorer in VIM
@@ -98,6 +98,9 @@ Plug 'godlygeek/tabular'
 
 " diffs on blocks of code/text
 Plug 'AndrewRadev/linediff.vim'
+
+" Git on vim gutter
+Plug 'airblade/vim-gitgutter'
 
 " Initialize plugin system
 " - Automatically executes `filetype plugin indent on` and `syntax enable`.
@@ -150,9 +153,16 @@ highlight CursorLine ctermbg=238
 
 " Keep text selected original color
 highlight Visual ctermfg=NONE guifg=NONE
+
 " Keep background color of Line number column same as gutter
-highlight LineNr guibg=#343434
-highlight CursorLineNr guibg=#343434
+highlight LineNr ctermfg=236 guibg=#343434
+highlight CursorLineNr ctermfg=236 guibg=#343434
+
+" removed line when doing diff
+highlight diffRemoved ctermfg=174 guifg=#cc9393
+
+" color of the remove sign in gutter
+highlight GitGutterDelete ctermfg=174 guifg=#cc9393
 
 "show extrx info about completion candiate in popup window
 set completeopt=popup,menuone
@@ -169,6 +179,9 @@ set laststatus=2
 " turn on relative line numbers for all files
 set number
 set relativenumber
+
+" Short delay after which diff markers appear when changing a git tracked file
+set updatetime=500
 
 " Enable folding
 set foldmethod=indent
