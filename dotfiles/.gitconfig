@@ -7,6 +7,6 @@
 	name = chengx
 	email = chengx@morgan-aps.com
 [core]
-	editor = vim
+	editor = vi
 [init]
 	defaultBranch = main
