@@ -127,9 +127,19 @@ xn%s/\<<C-r><C-w>\>/oremap <S-k> :m-2<CR>gv=gv
 xnoremap <S-j> :m'>+<CR>gv=gv
 " copy selected objects using ctrl+c
 "vnoremap <C-c> <Esc>`>a<CR><Esc>`<i<CR><Esc>vg_:w !xclip -i -selection c<CR><CR>kJJ
-vnoremap <silent><C-c> "zy
-\:call writefile(getreg('z', 1, 1), $HOME."/.vim/vim_clipboard")<CR>
-\:call system("xclip -r -sel c $HOME/.vim/vim_clipboard")<CR>
+
+if $TERM_UBUNTU == 0
+" in windows we use the clip.exe program to copy stuff into windows clipboard
+  let s:clip = '/mnt/c/Windows/System32/clip.exe'
+  vnoremap <silent><C-c> "zy
+  \:call writefile(getreg('z', 1, 1), $HOME."/.vim/vim_clipboard")<CR>
+  \:call system("cat $HOME/.vim/vim_clipboard \| clip.exe")<CR>
+else
+  vnoremap <silent><C-c> "zy
+  \:call writefile(getreg('z', 1, 1), $HOME."/.vim/vim_clipboard")<CR>
+  \:call system("xclip -r -sel c $HOME/.vim/vim_clipboard")<CR>
+endif
+
 
 """"""""""""""""""""""""""""""""""""""""
 "********** General Settings **********"
