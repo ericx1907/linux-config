@@ -56,7 +56,19 @@ let g:ycm_language_server = [
 let g:ycm_error_symbol = 'E'
 let g:ycm_warning_symbol = 'W'
 let g:ycm_max_diagnostics_to_display = 0
-let g:ycm_echo_current_diagnostic = 1
+"let g:ycm_echo_current_diagnostic = 1
+" Turn off ycm in the following vim filetype
+let g:ycm_filetype_blacklist = {
+  \ 'tagbar'   : 1,
+  \ 'notes'    : 1,
+  \ 'netrw'    : 1,
+  \ 'unite'    : 1,
+  \ 'vimwiki'  : 1,
+  \ 'pandoc'   : 1,
+  \ 'infolog'  : 1,
+  \ 'leaderf'  : 1,
+  \ 'mail'     : 1
+  \ }
 
 " Add syntax check
 Plug 'dense-analysis/ale'
@@ -119,25 +131,27 @@ nnoremap <leader>ns :set nospell<CR>
 nnoremap <leader>h :noh<CR>
 nnoremap <leader>l :lopen<CR>
 nnoremap <leader>c :lclose<CR>
+" replace the word under the cursor
 nnoremap <leader>r :%s/\<<C-r><C-w>\>/
 nnoremap <leader>t :NERDTreeToggle<CR>
 " move selected lines up one line
-xn%s/\<<C-r><C-w>\>/oremap <S-k> :m-2<CR>gv=gv
+xnoremap <S-k> :m-2<CR>gv=gv
 " move selected lines down one line
 xnoremap <S-j> :m'>+<CR>gv=gv
 " copy selected objects using ctrl+c
 "vnoremap <C-c> <Esc>`>a<CR><Esc>`<i<CR><Esc>vg_:w !xclip -i -selection c<CR><CR>kJJ
-
-if $TERM_UBUNTU == 0
-" in windows we use the clip.exe program to copy stuff into windows clipboard
-  let s:clip = '/mnt/c/Windows/System32/clip.exe'
-  vnoremap <silent><C-c> "zy
-  \:call writefile(getreg('z', 1, 1), $HOME."/.vim/vim_clipboard")<CR>
-  \:call system("cat $HOME/.vim/vim_clipboard \| clip.exe")<CR>
-else
-  vnoremap <silent><C-c> "zy
-  \:call writefile(getreg('z', 1, 1), $HOME."/.vim/vim_clipboard")<CR>
-  \:call system("xclip -r -sel c $HOME/.vim/vim_clipboard")<CR>
+if !has("clipboard")
+  if $TERM_UBUNTU == 0
+  " in windows we use the clip.exe program to copy stuff into windows clipboard
+    let s:clip = '/mnt/c/Windows/System32/clip.exe'
+    vnoremap <silent><C-c> "zy
+    \:call writefile(getreg('z', 1, 1), $HOME."/.vim/vim_clipboard")<CR>
+    \:call system("cat $HOME/.vim/vim_clipboard \| clip.exe")<CR>
+  else
+    vnoremap <silent><C-c> "zy
+    \:call writefile(getreg('z', 1, 1), $HOME."/.vim/vim_clipboard")<CR>
+    \:call system("xclip -r -sel c $HOME/.vim/vim_clipboard")<CR>
+  endif
 endif
 
 
@@ -165,14 +179,14 @@ highlight CursorLine ctermbg=238
 highlight Visual ctermfg=NONE guifg=NONE
 
 " Keep background color of Line number column same as gutter
-highlight LineNr ctermfg=236 guibg=#343434
-highlight CursorLineNr ctermfg=236 guibg=#343434
+highlight LineNr ctermbg=236 guibg=#343434
+highlight CursorLineNr ctermbg=236 guibg=#343434
 
 " removed line when doing diff
 highlight diffRemoved ctermfg=174 guifg=#cc9393
 
 " color of the remove sign in gutter
-highlight GitGutterDelete ctermfg=174 guifg=#cc9393
+highlight GitGutterDelete ctermfg=174 ctermbg=236 guifg=#cc9393 guibg=#343434
 
 "show extrx info about completion candiate in popup window
 set completeopt=popup,menuone
@@ -220,7 +234,7 @@ set backup
 set backupdir=~/.vim/tmp/
 set dir=~/.vim/tmp/swap/ " set the directory for swap files
 "if has('persistent_undo')
-"  set undofile	 " undo changes after closing
+  set undofile	 " undo changes after closing
 "endif
 
 " Switch on highlighting the last used search pattern.
@@ -275,6 +289,11 @@ augroup vimrcEx
   " For all text files set 'textwidth' to 88 characters.
   autocmd FileType text setlocal textwidth=88
 
+  " Format for markdown file
+  au BufNewFile,BufRead *.md
+      \ setlocal textwidth=88 |
+      \ setlocal smartindent
+
   " follow PEP8 coding style for python code
   au BufNewFile,BufRead *.py
       \ set tabstop=4 |
@@ -284,6 +303,14 @@ augroup vimrcEx
       \ set expandtab |
       \ set autoindent |
       \ set fileformat=unix
+
+  " format for c family files
+  au BufNewFile,BufRead *.c,*.h
+      \ set tabstop=2 |
+      \ set softtabstop=2 |
+      \ set shiftwidth=2 |
+      \ set expandtab
+  "   \ set autoindent |
 
   " Start NERDTree. If a file is specified, move the cursor to its window.
   autocmd StdinReadPre * let s:std_in=1
