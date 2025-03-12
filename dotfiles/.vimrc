@@ -296,21 +296,30 @@ augroup vimrcEx
 
   " follow PEP8 coding style for python code
   au BufNewFile,BufRead *.py
-      \ set tabstop=4 |
-      \ set softtabstop=4 |
-      \ set shiftwidth=4 |
-      \ set textwidth=79 |
-      \ set expandtab |
-      \ set autoindent |
-      \ set fileformat=unix
+    \ set tabstop=4 |
+    \ set softtabstop=4 |
+    \ set shiftwidth=4 |
+    \ set textwidth=79 |
+    \ set expandtab |
+    \ set autoindent |
+    \ set fileformat=unix
 
   " format for c family files
   au BufNewFile,BufRead *.c,*.h
-      \ set tabstop=2 |
-      \ set softtabstop=2 |
-      \ set shiftwidth=2 |
-      \ set expandtab
-  "   \ set autoindent |
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+    \ set expandtab
+  " \ set autoindent |
+
+  " 2 whitespace indent for vhdl souce file
+  au BufRead,BufNewFile *.vhd
+    \ let g:vhdl_indent_genportmap = 0 |
+    \ set tabstop=2 |
+    \ set softtabstop=2 |
+    \ set shiftwidth=2 |
+    \ set expandtab |
+    \ set fileformat=unix
 
   " Start NERDTree. If a file is specified, move the cursor to its window.
   autocmd StdinReadPre * let s:std_in=1
@@ -319,7 +328,6 @@ augroup vimrcEx
   " If using Ubuntu terminal change the size, do not change size in windows
   "+terminal
   "autocmd VimEnter * if $TERM_UBUNTU == 1 | set columns=140 lines=70 | endif | NERDTree | if argc() > 0 || exists("s:std_in") | wincmd p | endif
-
 
   " Exit Vim if NERDTree is the only window remaining in the only tab.
   "autocmd BufEnter * if tabpagenr('$') == 1 && winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree() | if $TERM_UBUNTU == 1 | set columns=100 lines=40 | endif | quit | endif
@@ -331,15 +339,6 @@ augroup vimrcEx
   au BufRead,BufNewFile * filetype indent off
 
   "au FileType vhdl filetype indent on
-
-  " 2 whitespace indent for vhdl souce file
-  au BufRead,BufNewFile *.vhd
-    \ let g:vhdl_indent_genportmap = 0 |
-    \ set tabstop=2 |
-    \ set softtabstop=2 |
-    \ set shiftwidth=2 |
-    \ set expandtab |
-    \ set fileformat=unix
 
   " Flag unnecessary whitespace
   au BufRead,BufNewFile *.py
