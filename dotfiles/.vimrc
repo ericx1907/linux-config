@@ -234,7 +234,7 @@ set backup
 set backupdir=~/.vim/tmp/
 set dir=~/.vim/tmp/swap/ " set the directory for swap files
 "if has('persistent_undo')
-  set undofile	 " undo changes after closing
+"  set undofile	 " undo changes after closing
 "endif
 
 " Switch on highlighting the last used search pattern.
