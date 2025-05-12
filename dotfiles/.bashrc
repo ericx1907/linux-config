@@ -49,18 +49,19 @@ esac
 #force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
-    if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
-	# We have color support; assume it's compliant with Ecma-48
-	# (ISO/IEC-6429). (Lack of such support is extremely rare, and such
-	# a case would tend to support setf rather than setaf.)
-	color_prompt=yes
-    else
-	color_prompt=
-    fi
+  if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
+    # We have color support; assume it's compliant with Ecma-48
+    # (ISO/IEC-6429). (Lack of such support is extremely rare, and such
+    # a case would tend to support setf rather than setaf.)
+    color_prompt=yes
+  else
+    color_prompt=
+  fi
 fi
 
 if [ "$color_prompt" = yes ]; then
-    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+   #original PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]:\[\033[01;34m\]\w\[\033[00m\]\$ '
+    PS1='${debian_chroot:+($debian_chroot)}\[\033[01;32m\]\u@\h\[\033[00m\]$ '
 else
     PS1='${debian_chroot:+($debian_chroot)}\u@\h:\w\$ '
 fi
@@ -157,11 +158,11 @@ if [ -s ~/.fzf.bash ]; then
   source ~/.fzf.bash
 else
 # source script if installed by apt package manager
-  if [ -s /usr/share/bash-completion/completions/fzf ]; then
-    source /usr/share/bash-completion/completions/fzf
+  if [ -s ~/.vim/plugged/fzf/shell/completion.bash ]; then
+    source ~/.vim/plugged/fzf/shell/completion.bash
   fi
-  if [ -s /usr/share/doc/fzf/examples/key-bindings.bash ]; then
-    source /usr/share/doc/fzf/examples/key-bindings.bash
+  if [ -s ~/.vim/plugged/fzf/shell/key-bindings.zsh ]; then
+    source ~/.vim/plugged/fzf/shell/key-bindings.bash
   fi
 fi
 
@@ -185,7 +186,7 @@ _fzf_setup_completion dir tree
 
 #fzf ctrl-t and alt-c behavior
 export FZF_CTRL_T_COMMAND="fd --hidden --follow --exclude .git"
-export FZF_ALT_C_COMMAND="fd -t d --hidden --follow --exclude .git"
+export FZF_ALT_C_COMMAND="fd -t d --hidden --follow --exclude .git /"
 export FZF_ALT_C_OPTS="--height=60% --preview 'tree -C {} | head -200'"
 
 # Add xvhdl to path vairable so vim can use it
@@ -206,3 +207,6 @@ fi
 
 # tell less to exit if context is less than one screen and display ANSI color escape sequences
 LESS="-RF"
+
+# For VCK190 TRD
+export working_dir=/home/ericx/vck190-base-trd

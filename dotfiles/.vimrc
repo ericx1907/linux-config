@@ -128,7 +128,7 @@ call plug#end()            " required
 """"""""""""""""""""
 nnoremap <leader>sp :set spell<CR>
 nnoremap <leader>ns :set nospell<CR>
-nnoremap <leader>h :noh<CR>
+nnoremap <leader>nh :noh<CR>
 nnoremap <leader>l :lopen<CR>
 nnoremap <leader>c :lclose<CR>
 " replace the word under the cursor
